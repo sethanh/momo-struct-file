@@ -1,0 +1,12 @@
+import React from 'react'
+import ContainerMain from './ContainerMain'
+import ContainerView from './ContainerView'
+
+const Container = () => {
+  return <></>
+}
+
+Container.Main = ContainerMain
+Container.View = ContainerView
+
+export default Container
