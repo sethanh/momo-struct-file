@@ -1,16 +1,17 @@
-import { Colors, Fonts, fontSize, heightSatusbar, horizontalScale, IconBack } from '../../assets'
+import { Colors, Fonts, fontSize, heightSatusbar, horizontalScale, IconBlackBack } from '../../assets'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { StyleSheet, StatusBar, View, TouchableOpacity, Text } from 'react-native'
+import { StyleProp,StyleSheet, StatusBar, View, TouchableOpacity, Text, TextStyle } from 'react-native'
 
 interface ContainerProps {
   children: JSX.Element | JSX.Element[] | null
   headerShow?: boolean
   title?: string
+  styleTitle?: StyleProp<TextStyle>
 }
 
 const ContainerMain = (props: ContainerProps) => {
-  const { children, headerShow, title } = props
+  const { children, headerShow, title ,styleTitle} = props
   const navigation = useNavigation()
 
   const onPressGoBack = () => {
@@ -28,10 +29,10 @@ const ContainerMain = (props: ContainerProps) => {
             style={styles.btnBack}
             onPress={onPressGoBack}
           >
-            <IconBack />
+            <IconBlackBack />
           </TouchableOpacity>
 
-          <Text style={styles.label}>{title}</Text>
+          <Text style={[styles.label,styleTitle]}>{title}</Text>
         </View>
       }
       {children}
@@ -54,7 +55,8 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: horizontalScale(24),
     paddingTop: heightSatusbar + horizontalScale(15),
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingBottom: horizontalScale(15)
   },
   label: {
     color: Colors.hFFFFFF,

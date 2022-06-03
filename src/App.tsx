@@ -4,7 +4,7 @@ import AppNavigation from './navigation'
 import {Screens} from './navigation/constants'
 
 const App = () => {
-  const [initialRouteName,] = useState(Screens.BOOKING)
+  const [initialRouteName,] = useState(Screens.HOME)
   return (
     <View style={styles.container}>
       <AppNavigation initialRouteName={initialRouteName} />

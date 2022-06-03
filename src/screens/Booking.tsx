@@ -14,11 +14,13 @@ const Booking = () => {
   })
   console.log('ss', data)
   return (
-    <View style={styles.container}>
-      <View style={[styles.contentBg, styles.clGray]}>
-        <Text>Booking</Text>
+    <Container.Main headerShow title="Booking" styleTitle={styles.title}>
+      <View style={styles.container}>
+        <View style={[styles.contentBg, styles.clGray]}>
+          <Text>Booking</Text>
+        </View>
       </View>
-    </View>
+    </Container.Main>
   );
 };
 
@@ -40,6 +42,9 @@ const styles = StyleSheet.create({
   },
   clGray: {
     backgroundColor: 'gray'
+  },
+  title:{
+    color: 'black'
   }
 });
 
