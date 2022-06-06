@@ -23,7 +23,7 @@ import {
   IconEyeHide,
   IconError,
   Fonts
-} from '../../utils'
+} from '../../assets'
 
 type Props = TextInputProps & {
   containerStyle?: StyleProp<ViewStyle>

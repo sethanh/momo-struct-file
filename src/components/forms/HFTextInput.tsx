@@ -15,7 +15,7 @@ import {
 } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SvgProps } from 'react-native-svg'
-import { Colors, horizontalScale, verticalScale, fontSize, IconCheck } from '../../utils'
+import { Colors, horizontalScale, verticalScale, fontSize, IconBack } from '../../assets'
 
 type Props = TextInputProps & {
   containerStyle?: StyleProp<ViewStyle>
@@ -61,7 +61,7 @@ const HFTextInput = (props: Props) => {
           <TouchableOpacity
             onPress={onRightPress}
           >
-            {RightIcon ? <RightIcon style={styles.iconCheck} /> : <IconCheck style={styles.iconCheck} />}
+            {RightIcon ? <RightIcon style={styles.iconCheck} /> : <IconBack style={styles.iconCheck} />}
 
           </TouchableOpacity>
         )}
