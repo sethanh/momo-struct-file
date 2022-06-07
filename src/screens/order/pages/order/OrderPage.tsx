@@ -1,12 +1,15 @@
+import { Container } from '@src/core'
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 
 const OrderPage = () => {
 
   return (
+    <Container.View headerShow  title='Lịch sử đơn hàng'>
     <View style={styles.container}>
-      <Text >OrderPage</Text>
+      <Text >Đơn hàng</Text>
     </View>
+   </Container.View>
   )
 }
 

@@ -1,12 +1,15 @@
+import { Container } from '@src/core'
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 
 const ProfilePage = () => {
 
   return (
+    <Container.View headerShow  title='Tài khoản'>
     <View style={styles.container}>
-      <Text >profile Page</Text>
+      <Text >Tài khoản</Text>
     </View>
+   </Container.View>
   )
 }
 

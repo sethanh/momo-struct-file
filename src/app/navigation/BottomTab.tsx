@@ -4,7 +4,7 @@ import {
   HomePage, ProfilePage, WalletPage, OrderPage, TimePage
 } from '@src/screens'
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs"
-import { Colors, fontSize, horizontalScale, IconHomeActive, IconHomeInactive, IconProfileActive, IconProfileInactive, IconWalletActive, IconWalletInacctive, Screens } from '@src/core'
+import { Colors, fontSize, horizontalScale,ICTab, Screens, verticalScale } from '@src/core'
 import { SvgProps } from 'react-native-svg'
 
 const Tab = createMaterialBottomTabNavigator()
@@ -24,7 +24,7 @@ const RenderIconInactive = ({ Icon, title }: { Icon: React.FC<SvgProps>, title: 
   return (
     <View style={styles.viewActive}>
       <Icon />
-      <Text style={[styles.title, { color: Colors.h656565 }]}>{title}</Text>
+      <Text style={[styles.title, { color: Colors.TAB.UNACTIVE }]}>{title}</Text>
     </View>
   )
 }
@@ -43,28 +43,28 @@ export default function BottomTab() {
         component={HomePage}
         options={{
           tabBarIcon: ({ focused }: any) => {
-            if (focused) return <RenderIcon Icon={IconHomeActive} title={'home'} />
-            return <RenderIconInactive Icon={IconHomeInactive} title={'home'} />
+            if (focused) return <RenderIcon   Icon={ICTab.TabHomeActive} title={'Home'} />
+            return <RenderIconInactive  Icon={ICTab.TabHome} title={'Home'} />
           },
         }}
       />
       <Tab.Screen
         name={Screens.ORDER_PAGE}
-        component={OrderPage}
+        component={TimePage}
         options={{
           tabBarIcon: ({ focused }: any) => {
-            if (focused) return <RenderIcon Icon={IconWalletActive} title={'order'} />
-            return <RenderIconInactive Icon={IconWalletInacctive} title={'order'} />
+            if (focused) return <RenderIcon  Icon={ICTab.TabCalendarActive} title={'Lịch hẹn'} />
+            return <RenderIconInactive  Icon={ICTab.TabCalendar} title={'Lịch hẹn'} />
           },
         }}
       />
       <Tab.Screen
         name={Screens.TIME_PAGE}
-        component={TimePage}
+        component={OrderPage}
         options={{
           tabBarIcon: ({ focused }: any) => {
-            if (focused) return <RenderIcon Icon={IconWalletActive} title={'time'} />
-            return <RenderIconInactive Icon={IconWalletInacctive} title={'time'} />
+            if (focused) return <RenderIcon  Icon={ICTab.TabOrderActive} title={'Đơn hàng'} />
+            return <RenderIconInactive  Icon={ICTab.TabOrder} title={'Đơn hàng'} />
           },
         }}
       />
@@ -73,8 +73,8 @@ export default function BottomTab() {
         component={WalletPage}
         options={{
           tabBarIcon: ({ focused }: any) => {
-            if (focused) return <RenderIcon Icon={IconWalletActive} title={'wallet'} />
-            return <RenderIconInactive Icon={IconWalletInacctive} title={'wallet'} />
+            if (focused) return <RenderIcon Icon={ICTab.TabFavouriteActive} title={'Yêu thích'} />
+            return <RenderIconInactive Icon={ICTab.TabFavourite} title={'Yêu thích'} />
           },
         }}
       />
@@ -83,8 +83,8 @@ export default function BottomTab() {
         component={ProfilePage}
         options={{
           tabBarIcon: ({ focused }: any) => {
-            if (focused) return <RenderIcon Icon={IconProfileActive} title={'profile'} />
-            return <RenderIconInactive Icon={IconProfileInactive} title={'profile'} />
+            if (focused) return <RenderIcon Icon={ICTab.TabProfileActive} title={'Tài khoản'} />
+            return <RenderIconInactive Icon={ICTab.TabProfile} title={'Tài khoản'} />
           },
         }}
       />
@@ -103,14 +103,16 @@ const styles = StyleSheet.create({
   title: {
     fontSize: fontSize(12),
     marginLeft: horizontalScale(5),
-    color: Colors.hC2862F
+    lineHeight: fontSize(16),
+    color: Colors.TAB.ACTIVE
   },
   styleBar: {
     position: 'absolute',
     bottom: horizontalScale(0),
+    paddingTop: verticalScale(8),
     elavation: 0,
     backgroundColor: Colors.hFFFFFF,
-    height: 55,
+    height: verticalScale(84),
     overflow: 'hidden',
   }
 })

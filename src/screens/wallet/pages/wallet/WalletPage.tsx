@@ -1,12 +1,15 @@
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
+import { Container } from '@src/core'
 
 const WalletPage = () => {
 
   return (
-    <View style={styles.container}>
-      <Text >walletPage</Text>
-    </View>
+    <Container.View headerShow  title='Yêu thích'>
+      <View style={styles.container}>
+        <Text >walletPage</Text>
+      </View>
+    </Container.View>
   )
 }
 

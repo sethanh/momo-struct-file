@@ -1,12 +1,15 @@
+import { Container } from '@src/core'
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 
 const TimePage = () => {
 
   return (
+    <Container.View headerShow  title='Lịch hẹn của tôi' >
     <View style={styles.container}>
-      <Text >TimePage</Text>
+      <Text >lịch hẹn</Text>
     </View>
+   </Container.View>
   )
 }
 

@@ -56,4 +56,8 @@ export const Colors = {
   h1E1E1E: '#1E1E1E',
   hDDC5B6: '#DDC5B6',
   hB16E27: '#B16E27',
+  TAB:{
+    ACTIVE:'#0068FF',
+    UNACTIVE:'#808B9F'
+  }
 }
