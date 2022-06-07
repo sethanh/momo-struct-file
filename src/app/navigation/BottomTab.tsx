@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, View, Dimensions, StyleSheet } from 'react-native'
 import {
-  HomePage, ProfilePage, WalletPage, OrderPage, TimePage
+  HomePage, ProfilePage, FavouritePage, OrderPage, TimePage
 } from '@src/screens'
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs"
 import { Colors, fontSize, horizontalScale,ICTab, Screens, verticalScale } from '@src/core'
@@ -70,7 +70,7 @@ export default function BottomTab() {
       />
       <Tab.Screen
         name={Screens.WALLET_PAGE}
-        component={WalletPage}
+        component={FavouritePage}
         options={{
           tabBarIcon: ({ focused }: any) => {
             if (focused) return <RenderIcon Icon={ICTab.TabFavouriteActive} title={'Yêu thích'} />

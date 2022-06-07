@@ -2,18 +2,18 @@ import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import { Container } from '@src/core'
 
-const WalletPage = () => {
+const FavouritePage = () => {
 
   return (
     <Container.View headerShow  title='Yêu thích'>
       <View style={styles.container}>
-        <Text >walletPage</Text>
+        <Text >FavouritePage</Text>
       </View>
     </Container.View>
   )
 }
 
-export default WalletPage
+export default FavouritePage
 
 const styles = StyleSheet.create({
   container: {

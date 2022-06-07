@@ -18,43 +18,16 @@ const ContainerView = (props: ContainerProps) => {
   const { children, headerShow, title, showRight, onRightClick, styleView, IconRight,showLeft } = props
   const navigation = useNavigation()
 
-  const onPressGoBack = () => {
-    navigation.goBack()
-  }
 
   return (
     <View
       style={[styles.container, styleView]}
     >
-      <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
-      {
-        headerShow && <View style={styles.content}>
+      <View>
+        <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
           {
-            showLeft&&(
-              <TouchableOpacity
-            style={styles.btnBack}
-            onPress={onPressGoBack}
-          >
-            <IconBack />
-          </TouchableOpacity>
-            )
           }
-          
-
-          <Text style={styles.label}>{title}</Text>
-
-          {
-            showRight && (
-              <TouchableOpacity
-                style={styles.btnMore}
-                onPress={onRightClick}
-              >
-                <IconRight />
-              </TouchableOpacity>
-            )
-          }
-        </View>
-      }
+      </View>
       {children}
     </View>
   )
