@@ -1,0 +1,116 @@
+import React from 'react'
+import { Text, View, Dimensions, StyleSheet } from 'react-native'
+import {
+  HomePage, ProfilePage, WalletPage, OrderPage, TimePage
+} from '@src/screens'
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs"
+import { Colors, fontSize, horizontalScale, IconHomeActive, IconHomeInactive, IconProfileActive, IconProfileInactive, IconWalletActive, IconWalletInacctive, Screens } from '@src/core'
+import { SvgProps } from 'react-native-svg'
+
+const Tab = createMaterialBottomTabNavigator()
+const { width } = Dimensions.get('window')
+const widthTab = width / 5
+
+const RenderIcon = ({ Icon, title }: { Icon: React.FC<SvgProps>, title: string }) => {
+  return (
+    <View style={styles.viewActive}>
+      <Icon />
+      <Text style={styles.title}>{title}</Text>
+    </View>
+  )
+}
+
+const RenderIconInactive = ({ Icon, title }: { Icon: React.FC<SvgProps>, title: string }) => {
+  return (
+    <View style={styles.viewActive}>
+      <Icon />
+      <Text style={[styles.title, { color: Colors.h656565 }]}>{title}</Text>
+    </View>
+  )
+}
+
+export default function BottomTab() {
+  return (
+    <Tab.Navigator
+      initialRouteName={Screens.HOME}
+      shifting={false}
+      sceneAnimationEnabled={false}
+      barStyle={styles.styleBar}
+      labeled={false}
+    >
+      <Tab.Screen
+        name={Screens.HOME}
+        component={HomePage}
+        options={{
+          tabBarIcon: ({ focused }: any) => {
+            if (focused) return <RenderIcon Icon={IconHomeActive} title={'home'} />
+            return <RenderIconInactive Icon={IconHomeInactive} title={'home'} />
+          },
+        }}
+      />
+      <Tab.Screen
+        name={Screens.ORDER_PAGE}
+        component={OrderPage}
+        options={{
+          tabBarIcon: ({ focused }: any) => {
+            if (focused) return <RenderIcon Icon={IconWalletActive} title={'order'} />
+            return <RenderIconInactive Icon={IconWalletInacctive} title={'order'} />
+          },
+        }}
+      />
+      <Tab.Screen
+        name={Screens.TIME_PAGE}
+        component={TimePage}
+        options={{
+          tabBarIcon: ({ focused }: any) => {
+            if (focused) return <RenderIcon Icon={IconWalletActive} title={'time'} />
+            return <RenderIconInactive Icon={IconWalletInacctive} title={'time'} />
+          },
+        }}
+      />
+      <Tab.Screen
+        name={Screens.WALLET_PAGE}
+        component={WalletPage}
+        options={{
+          tabBarIcon: ({ focused }: any) => {
+            if (focused) return <RenderIcon Icon={IconWalletActive} title={'wallet'} />
+            return <RenderIconInactive Icon={IconWalletInacctive} title={'wallet'} />
+          },
+        }}
+      />
+      <Tab.Screen
+        name={Screens.PROFILE_PAGE}
+        component={ProfilePage}
+        options={{
+          tabBarIcon: ({ focused }: any) => {
+            if (focused) return <RenderIcon Icon={IconProfileActive} title={'profile'} />
+            return <RenderIconInactive Icon={IconProfileInactive} title={'profile'} />
+          },
+        }}
+      />
+    </Tab.Navigator>
+  )
+}
+
+const styles = StyleSheet.create({
+  viewActive: {
+    flex: 1,
+    backgroundColor: Colors.hFFFFFF,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: widthTab
+  },
+  title: {
+    fontSize: fontSize(12),
+    marginLeft: horizontalScale(5),
+    color: Colors.hC2862F
+  },
+  styleBar: {
+    position: 'absolute',
+    bottom: horizontalScale(0),
+    elavation: 0,
+    backgroundColor: Colors.hFFFFFF,
+    height: 55,
+    overflow: 'hidden',
+  }
+})

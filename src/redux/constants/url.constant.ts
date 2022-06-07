@@ -1,1 +1,0 @@
-export const Host = 'https://icf-api.volcanly.me'
