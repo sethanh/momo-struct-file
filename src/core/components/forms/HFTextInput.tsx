@@ -23,7 +23,7 @@ type Props = TextInputProps & {
   labelStyle?: StyleProp<TextStyle>
   name: string
   label?: string
-  leftIcon?: ImageSourcePropType
+  LeftIcon?: React.FC<SvgProps>
   valueCode?: string
   check?: boolean
   RightIcon?: React.FC<SvgProps>
@@ -32,7 +32,7 @@ type Props = TextInputProps & {
 }
 
 const HFTextInput = (props: Props) => {
-  const { containerStyle, contentStyle, style, leftIcon, name, label, valueCode, labelStyle, RightIcon, check, keyboardType, onRightPress, ...rest } = props
+  const { containerStyle, contentStyle, style, LeftIcon, name, label, valueCode, labelStyle, RightIcon, check, keyboardType, onRightPress, ...rest } = props
   const formContext = useFormContext()
   const { field } = useController({
     name,
@@ -48,7 +48,7 @@ const HFTextInput = (props: Props) => {
       {label && <Text style={[styles.label, labelStyle]}>{label}</Text>}
       <View style={[styles.content, contentStyle]}>
         {valueCode && <Text style={styles.textValueCode}>{valueCode}</Text>}
-        {leftIcon && <Image source={leftIcon} style={styles.iconLeft} />}
+        {LeftIcon && <LeftIcon style={styles.iconLeft}/>}
         <TextInput
           {...rest}
           style={[styles.input, style]}
@@ -102,9 +102,9 @@ const styles = StyleSheet.create({
   },
   content: {
     alignItems: 'center',
-    borderRadius: horizontalScale(24),
+    borderRadius: horizontalScale(10),
     backgroundColor: Colors.TEXTINPUT.BG,
-    height: horizontalScale(48),
+    height: horizontalScale(38),
     paddingLeft: horizontalScale(15),
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -124,12 +124,12 @@ const styles = StyleSheet.create({
   },
   textValueCode: {
     fontSize: fontSize(16),
-    color: Colors.BASE_COLOR.BASE_TEXT,
+    color: Colors.TAB.UNACTIVE,
     marginRight: horizontalScale(5),
   },
   iconLeft: {
     height: horizontalScale(20),
-    marginRight: horizontalScale(14),
+    marginRight: horizontalScale(6),
   },
   iconCheck: {
     marginRight: horizontalScale(14)

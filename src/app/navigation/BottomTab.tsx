@@ -4,7 +4,7 @@ import {
   HomePage, ProfilePage, FavouritePage, OrderPage, TimePage
 } from '@src/screens'
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs"
-import { Colors, fontSize, horizontalScale,ICTab, Screens, verticalScale } from '@src/core'
+import { Colors, Fonts, fontSize, horizontalScale,ICTab, Screens, verticalScale } from '@src/core'
 import { SvgProps } from 'react-native-svg'
 
 const Tab = createMaterialBottomTabNavigator()
@@ -104,7 +104,8 @@ const styles = StyleSheet.create({
     fontSize: fontSize(12),
     marginLeft: horizontalScale(5),
     lineHeight: fontSize(16),
-    color: Colors.TAB.ACTIVE
+    color: Colors.TAB.ACTIVE,
+    fontFamily: Fonts.Roboto
   },
   styleBar: {
     position: 'absolute',

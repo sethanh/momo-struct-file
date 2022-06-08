@@ -1,7 +1,9 @@
-import { Colors, fontSize, heightSatusbar, horizontalScale, IconBack,Fonts } from '@src/core/utils'
+import { Colors, fontSize, heightSatusbar, horizontalScale, IconBack, Fonts, verticalScale,IC } from '@src/core/utils'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { StyleSheet, StatusBar, View, TouchableOpacity, Text, ViewStyle } from 'react-native'
+import { FormProvider, useForm } from 'react-hook-form'
+import { Form } from '@src/core'
 
 interface ContainerProps {
   children: JSX.Element | JSX.Element[] | null
@@ -14,28 +16,55 @@ interface ContainerProps {
   IconRight?: any
 }
 
-const ContainerView = (props: ContainerProps) => {
-  const { children, headerShow, title, showRight, onRightClick, styleView, IconRight,showLeft } = props
+interface FormValue {
+  search: ''
+}
+
+const ContainerHome = (props: ContainerProps) => {
+  const { children, headerShow, title, showRight, onRightClick, styleView, IconRight, showLeft } = props
   const navigation = useNavigation()
+  const form = useForm<FormValue>({
+    defaultValues: {},
+    mode: 'onChange'
+  })
 
 
   return (
     <View
       style={[styles.container, styleView]}
     >
-      <View>
+      <View style={[styles.header]}>
         <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
-          {
-          }
+        {
+          <View style={[styles.content]}>
+            <View style={styles.viewSearch}>
+              <FormProvider {...form}>
+                <Form.TextInput
+                  name='search'
+                  LeftIcon={IC.IconSearch}
+                  // check
+                  // RightIcon={IconClose}
+                  placeholder="Tìm kiếm"
+                  // onRightPress={onClear}
+                  contentStyle={styles.search}
+                />
+              </FormProvider>
+            </View>
+            <TouchableOpacity style={[styles.bgRight]}>
+              <Text style={[styles.txtHeader]}>Đà Nẵng</Text>
+              <IC.IconRowDown/>
+            </TouchableOpacity>
+          </View>
+        }
       </View>
       {children}
     </View>
   )
 }
 
-export default ContainerView
+export default ContainerHome
 
-ContainerView.defaultProps = {
+ContainerHome.defaultProps = {
   headerShow: false,
   title: '',
   showRight: false,
@@ -48,17 +77,21 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.hFFFFFF
   },
+  header: {
+    backgroundColor: Colors.TAB.ACTIVE,
+    paddingBottom: horizontalScale(10),
+  },
   content: {
-    paddingHorizontal: horizontalScale(22),
-    paddingTop: heightSatusbar + horizontalScale(15),
+    paddingTop: heightSatusbar+ horizontalScale(23),
     alignItems: 'center',
-    paddingBottom: horizontalScale(15),
+    paddingHorizontal: horizontalScale(16),
+    flexDirection: 'row'
   },
   label: {
-    color: Colors.h151515,
+    color: Colors.TAB.UNACTIVE,
     fontSize: fontSize(16),
     lineHeight: fontSize(24),
-    fontWeight:'700',
+    fontWeight: '700',
     fontFamily: Fonts.Roboto
   },
   btnBack: {
@@ -70,5 +103,24 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: heightSatusbar + horizontalScale(15),
     right: horizontalScale(22)
+  },
+  viewSearch: {
+   flex: 1
+  },
+  search: {
+    backgroundColor: Colors.hFFFFFF
+  },
+  bgRight:{
+    marginLeft: horizontalScale(16),
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  txtHeader:{
+    color: Colors.hFFFFFF,
+    fontSize: fontSize(16),
+    lineHeight: fontSize(24),
+    fontWeight: '700',
+    fontFamily: Fonts.Roboto,
+    marginRight: horizontalScale(8.67)
   }
 })

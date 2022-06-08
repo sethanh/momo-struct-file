@@ -6,4 +6,5 @@ export const Screens = {
   SEARCH_PAGE: 'SearchPage',
   ORDER_PAGE: 'OrderPage',
   TIME_PAGE: 'TimePage',
+  SALON_PAGE: 'SalonPage',
 }

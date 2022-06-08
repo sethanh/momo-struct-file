@@ -23,6 +23,31 @@ import  TabOrder from '../../assets/Images/svg/tab_order.svg'
 import  TabProfileActive from '../../assets/Images/svg/tab_profile_active.svg'
 import  TabProfile from '../../assets/Images/svg/tab_profile.svg'
 
+import  IconSearch from '../../assets/Images/svg/ic_search.svg'
+import IconRowDown from '../../assets/Images/svg/ic_row_down.svg'
+import IconSpa from '../../assets/Images/svg/ic_spa.svg'
+import IconSalon from '../../assets/Images/svg/ic_salon.svg'
+import IconNail from '../../assets/Images/svg/ic_nail.svg'
+import IconLocation from '../../assets/Images/svg/ic_location.svg'
+import IconFill from '../../assets/Images/svg/ic_fill.svg'
+import IconClock from '../../assets/Images/svg/ic_clock.svg'
+import IconStar from '../../assets/Images/svg/ic_star.svg'
+import IconArrowss from '../../assets/Images/svg/ic_arrowss.svg'
+
+
+const IC={
+  IconSearch,
+  IconRowDown,
+  IconNail,
+  IconSalon,
+  IconSpa,
+  IconLocation,
+  IconFill,
+  IconClock,
+  IconStar,
+  IconArrowss
+}
+
 const ICTab={
   TabCalendar,
   TabCalendarActive,
@@ -41,5 +66,5 @@ export {
   IconCheck, IconCheckSuccess, IconCheckError,
   IconHomeActive, IconHomeInactive, IconWalletActive, IconWalletInacctive,
   IconProfileActive, IconProfileInactive,
-  ICTab
+  ICTab,IC
 }

@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     paddingBottom: horizontalScale(15),
   },
   label: {
-    color: Colors.h151515,
+    color: Colors.TAB.UNACTIVE,
     fontSize: fontSize(16),
     lineHeight: fontSize(24),
     fontWeight:'700',
