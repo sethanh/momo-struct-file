@@ -34,5 +34,9 @@ export const Colors = {
     UNACTIVE:'#808B9F',
     RED:'#F5222D',
     GRAY:'#EEF0F4'
+  },
+  BUTTON:{
+    BLUE: '#0066FF',
+    GRAY: '#F0F2F5'
   }
 }

@@ -35,15 +35,16 @@ ButtonMain.defaultProps = {
 const styles = StyleSheet.create({
   btn: {
     width: '100%',
-    borderRadius: horizontalScale(24),
-    backgroundColor: Colors.h000000,
-    height: verticalScale(48),
+    borderRadius: horizontalScale(6),
+    backgroundColor: Colors.BUTTON.BLUE,
+    height: horizontalScale(44),
     justifyContent: 'center',
     alignItems: 'center'
   },
   label: {
     fontSize: fontSize(16),
     color: Colors.hFFFFFF,
-    fontFamily: Fonts.Helvetica_Bold
+    fontFamily: Fonts.Roboto,
+    fontWeight: '700'
   }
 })

@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { Screens } from '@src/core'
 import BottomTab from './BottomTab'
-import {SalonPage} from '@src/screens'
+import {SalonPage,SalonDetail} from '@src/screens'
 
 const Stack = createStackNavigator()
 
@@ -18,6 +18,7 @@ const AppNavigation = ({ initialRouteName }: { initialRouteName: string }) => {
                 }}>
                 <Stack.Screen name={Screens.HOMEPAGE} component={BottomTab} />
                 <Stack.Screen name={Screens.SALON_PAGE} component={SalonPage} />
+                <Stack.Screen name={Screens.SALON_DETAIL} component={SalonDetail} />
             </Stack.Navigator>
         </NavigationContainer>
     )

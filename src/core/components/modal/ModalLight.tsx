@@ -48,8 +48,9 @@ ModalLight.defaultProps = {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
+        // alignItems: 'center',
+        // justifyContent: 'center',
+        justifyContent:'flex-end'
     },
     blur: {
         position: 'absolute',
@@ -63,6 +64,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     popub:{
-        flex:1
+        flex:1,
+        backgroundColor: 'black',
+        opacity: 0.2
     }
 })

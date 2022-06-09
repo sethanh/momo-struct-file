@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native'
-import { Container, horizontalScale, IC, Colors, fontSize, Fonts, Screens } from '@src/core'
+import { Container, horizontalScale, IC, Colors, fontSize, Fonts, Screens, formatMoney } from '@src/core'
 import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, FlatList, ImageBackground, ScrollView } from 'react-native'
 import { SvgProps } from 'react-native-svg'
@@ -10,8 +10,8 @@ const HomePage = () => {
   const navigation = useNavigation()
   const { promotions, offers } = homeConst
 
-  const handleNavigator = (screen:string, data?: any) => {
-    data ? navigation.navigate(screen,data) : navigation.navigate(screen)
+  const handleNavigator = (screen: string, data?: any) => {
+    data ? navigation.navigate(screen, data) : navigation.navigate(screen)
   }
 
 
@@ -26,7 +26,7 @@ const HomePage = () => {
   }
 
   const renderViewItemSelected = (title: string, Icon: React.FC<SvgProps>, colors: string) => (
-    <TouchableOpacity style={[styles.bgItemSelected, { backgroundColor: colors }]} onPress={()=>onHandleSeleted(title)}>
+    <TouchableOpacity style={[styles.bgItemSelected, { backgroundColor: colors }]} onPress={() => onHandleSeleted(title)}>
       <Text style={[styles.txtItemSelected]}>{title}</Text>
       <Icon />
     </TouchableOpacity>)
@@ -47,13 +47,13 @@ const HomePage = () => {
         imageStyle={styles.imPromotion}
       >
         <View style={[styles.bgPro]}>
-          <Text>Giảm {item.promotion} %</Text>
+          <Text style={[styles.txtpromo]}>Giảm {item.promotion} %</Text>
         </View>
       </ImageBackground>
       <Text style={[styles.txtTitle, styles.marginTxt]}>{item.name}</Text>
-      <View style={[styles.row,{marginVertical:horizontalScale(6)}]}>
-        <Text style={[styles.txtAd,styles.txtprice]}>{(item.price*item.promotion/100).toFixed(0)}đ</Text>
-        <Text style={[styles.txtAd,styles.txtpreprice]}>{(item.price*item.promotion/100).toFixed(0)}đ</Text>
+      <View style={[styles.row, { marginVertical: horizontalScale(6) }]}>
+        <Text style={[styles.txtAd, styles.txtprice]}>{formatMoney(item.price * (100-item.promotion) / 100)}đ</Text>
+        <Text style={[styles.txtAd, styles.txtpreprice]}>{formatMoney(item.price)}đ</Text>
       </View>
       <View style={[styles.row]}>
         <IC.IconLocation />
@@ -61,6 +61,7 @@ const HomePage = () => {
       </View>
     </TouchableOpacity>
   )
+
   const renderItemOffer = ({ item }: any) => (
     <TouchableOpacity>
       <ImageBackground
@@ -69,8 +70,13 @@ const HomePage = () => {
         imageStyle={styles.imgOffer}
       >
       </ImageBackground>
-      <Text style={[styles.txtTitle,{color:item.unit === 0 ? Colors.PANEL.BLUE : item.unit === 1 ? Colors.PANEL.YELLOW : Colors.PANEL.PINK}]}>{item.unit === 0 ? "Salon" : item.unit === 1 ? 'Spa' : 'Nail'}</Text>
-      <Text style={[styles.txtTitle,{marginBottom: horizontalScale(6)}]}>{item.name}</Text>
+      <Text style={[
+        styles.txtTitle,
+        { color: item.unit === 0 ? Colors.PANEL.BLUE : item.unit === 1 ? Colors.PANEL.YELLOW : Colors.PANEL.PINK }
+      ]}>
+        {item.unit === 0 ? "Salon" : item.unit === 1 ? 'Spa' : 'Nail'}
+      </Text>
+      <Text style={[styles.txtTitle, { marginBottom: horizontalScale(6) }]}>{item.name}</Text>
       <View style={styles.row}>
         <IC.IconLocation />
         <Text style={[styles.txtAd]}>{item.address}</Text>
@@ -94,15 +100,16 @@ const HomePage = () => {
         data={offers}
         renderItem={renderItemOffer}
         horizontal
+        showsHorizontalScrollIndicator={false}
       />
     </View>
   )
 
   const renderTitleView = (title: string) => (
-    <View style={[styles.bgtxtoffer, styles.row,{marginBottom:horizontalScale(12)}]}>
+    <View style={[styles.bgtxtoffer, styles.row, { marginBottom: horizontalScale(12) }]}>
       <Text style={[styles.txtof1]}>{title}</Text>
       <TouchableOpacity>
-        <Text style={[styles.txtof2]}>Xem tất cả</Text>
+        <IC.IconNext/>
       </TouchableOpacity>
     </View>
   )
@@ -111,13 +118,11 @@ const HomePage = () => {
     <Container.Home headerShow>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
-
           {renderViewSelected()}
           {renderTitleView('Khuyến Mãi')}
           {renderPromotionView()}
           {renderTitleView('Địa điểm nhiều deal hot')}
           {renderOfferView()}
-
         </View>
       </ScrollView>
     </Container.Home>
@@ -192,7 +197,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.TXT.RED,
     paddingVertical: horizontalScale(4),
     borderRadius: 6,
-    width: horizontalScale(80),
+    width: horizontalScale(70),
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -230,10 +235,17 @@ const styles = StyleSheet.create({
     color: Colors.TXT.RED,
     marginLeft: horizontalScale(0)
   },
-  txtpreprice:{
+  txtpreprice: {
     marginLeft: horizontalScale(10),
     fontSize: fontSize(12),
     textDecorationLine: 'line-through',
     textDecorationStyle: 'solid'
+  },
+  txtpromo:{
+    fontSize: fontSize(12),
+    lineHeight: fontSize(16),
+    fontWeight: '500',
+    fontFamily: Fonts.Roboto,
+    color: 'white',
   }
 })

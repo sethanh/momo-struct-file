@@ -1,47 +1,77 @@
-import { Colors, Container, Fonts, fontSize, horizontalScale, IC, IMAGE } from '@src/core'
-import React from 'react'
-import { StyleSheet, View, Text, Image, FlatList } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { useNavigation } from '@react-navigation/native'
+import { Colors, Container, Fonts, fontSize, horizontalScale, IC, IMAGE, Modal, Button,Screens } from '@src/core'
+import React, { useState } from 'react'
+import { StyleSheet, View, Text, Image, FlatList, TouchableOpacity  } from 'react-native'
 import { SvgProps } from 'react-native-svg'
-import {salonConst} from '../../constants'
+import { salonConst } from '../../constants'
 
 const SalonPage = () => {
+  const navigation = useNavigation()
 
-  const {infors} = salonConst
+  const handleNavigator = (screen: string, data?: any) => {
+    data ? navigation.navigate(screen, data) : navigation.navigate(screen)
+  }
 
-  const renderItemSalon = ({item}:any) => (
-    <TouchableOpacity style={[styles.bgSalon, styles.row]}>
+
+  const [showFill, setShowFill] = useState(false)
+
+  const { infors } = salonConst
+
+  const renderItemSalon = ({ item }: any) => (
+    <TouchableOpacity style={[styles.bgSalon, styles.row]} onPress={()=>handleNavigator(Screens.SALON_DETAIL,item)}>
       <Image source={item.image} style={[styles.logo]} />
       <View style={[styles.infoSalon]}>
-        <Text style={[styles.mgTxt,styles.txtTitle]}>
+        <Text style={[styles.txtTitle]}>
           {item.name}
         </Text>
         {renderInfoView(IC.IconLocation, item.address)}
-        <View style={[styles.row, styles.mgTxt,{marginBottom:horizontalScale(10)}]}>
+        <View style={[styles.row]}>
           {renderInfoView(IC.IconStar, `${item.star}(${item.quantify})`)}
           {renderInfoView(IC.IconArrowss, item.far)}
         </View>
         {renderInfoView(IC.IconClock, item.open)}
-       
+
       </View>
     </TouchableOpacity>
   )
+
   const renderInfoView = (Icon: React.FC<SvgProps>, value: string) => (
-    <View style={[styles.row,styles.mgTxt]}>
+    <View style={[styles.row, styles.mgTxt]}>
       <Icon />
       <Text style={[styles.txtAd]}>{value}</Text>
     </View>
   )
+  
+  const rederFillView = () => (
+    <View style={[styles.bgFill, styles.boderTop]}>
+      <View style={[styles.row, styles.space]}>
+        <TouchableOpacity onPress={()=>setShowFill(false)}>
+          <IC.IconClose />
+        </TouchableOpacity>
+        <Text style={[styles.txtTitle, styles.bold]}>Bộ lọc</Text>
+        <Text style={styles.txtTitle}>Xóa</Text>
+      </View>
+      <Text style={[styles.txtTitle, styles.bold]}>Vị trí</Text>
+      <Text style={[styles.txtTitle]}>Dưới 3.5 km</Text>
+      <View style={styles.line}></View>
+      <Text style={[styles.txtTitle, styles.bold]}>Điểm đánh giá của khách</Text>
+      <Button.Main label='Áp dụng'></Button.Main>
+    </View>
+  )
+
   return (
-    <Container.View headerShow title='Danh sách salon' showLeft showRight IconRight={IC.IconFill}>
+    <Container.View headerShow title='Danh sách salon' showLeft showRight IconRight={IC.IconFill} onRightClick={()=>setShowFill(!showFill)}>
       <View style={styles.container}>
         <View style={styles.line}></View>
         <FlatList
-        data={infors}
-        renderItem={renderItemSalon}
-        showsVerticalScrollIndicator={false}
+          data={infors}
+          renderItem={renderItemSalon}
+          showsVerticalScrollIndicator={false}
         />
       </View>
+      <Modal.Light visible={showFill} onCloseModal={()=>setShowFill(false)}>
+          {rederFillView()}
+      </Modal.Light>
     </Container.View>
   )
 }
@@ -101,4 +131,21 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.Roboto,
     color: Colors.TXT.BLACK
   },
+  bgFill: {
+    backgroundColor: 'white',
+    width: '100%',
+    paddingBottom: horizontalScale(40),
+    paddingTop: horizontalScale(24),
+    paddingHorizontal: horizontalScale(16)
+  },
+  space: {
+    justifyContent: 'space-between'
+  },
+  bold: {
+    fontWeight: '700',
+  },
+  boderTop: {
+    borderTopLeftRadius: horizontalScale(16),
+    borderTopRightRadius: horizontalScale(16)
+  }
 })

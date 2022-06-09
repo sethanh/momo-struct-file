@@ -29,10 +29,11 @@ type Props = TextInputProps & {
   RightIcon?: React.FC<SvgProps>
   keyboardType?: string
   onRightPress?: () => void
+  opacity?: boolean
 }
 
 const HFTextInput = (props: Props) => {
-  const { containerStyle, contentStyle, style, LeftIcon, name, label, valueCode, labelStyle, RightIcon, check, keyboardType, onRightPress, ...rest } = props
+  const { containerStyle, contentStyle, style, LeftIcon, name, label, valueCode, labelStyle, RightIcon, check, keyboardType, onRightPress,opacity, ...rest } = props
   const formContext = useFormContext()
   const { field } = useController({
     name,
@@ -51,10 +52,10 @@ const HFTextInput = (props: Props) => {
         {LeftIcon && <LeftIcon style={styles.iconLeft}/>}
         <TextInput
           {...rest}
-          style={[styles.input, style]}
+          style={[styles.input, style,opacity&&{color:'white'}]}
           value={field.value}
           onChangeText={field.onChange}
-          placeholderTextColor={Colors.TEXTINPUT.PLACEHOLDER}
+          placeholderTextColor={opacity?'white':Colors.TEXTINPUT.PLACEHOLDER}
           keyboardType= {keyboardType||'default'}
         />
         {check && (
@@ -74,6 +75,7 @@ const HFTextInput = (props: Props) => {
           return <Text style={styles.error}>{message}</Text>
         }}
       />
+      {opacity&&<View style={styles.opacity}></View>}
     </View>
   )
 }
@@ -88,7 +90,8 @@ HFTextInput.defaultProps = {
   labelStyle: null,
   RightIcon: null,
   keyboardType: 'default',
-  onRightPress: () => { }
+  onRightPress: () => { },
+  opacity: false
 }
 
 export default HFTextInput
@@ -103,11 +106,12 @@ const styles = StyleSheet.create({
   content: {
     alignItems: 'center',
     borderRadius: horizontalScale(10),
-    backgroundColor: Colors.TEXTINPUT.BG,
+    // backgroundColor: Colors.TEXTINPUT.BG,
     height: horizontalScale(38),
     paddingLeft: horizontalScale(15),
     flexDirection: 'row',
     justifyContent: 'space-between',
+    zIndex: 2,
   },
   input: {
     flex: 1,
@@ -133,5 +137,14 @@ const styles = StyleSheet.create({
   },
   iconCheck: {
     marginRight: horizontalScale(14)
+  },
+  opacity:{
+    width: '100%',
+    height: '100%',
+    backgroundColor:Colors.hFFFFFF,
+    position: 'absolute',
+    opacity: 0.4,
+    borderRadius: horizontalScale(10),
+    zIndex: 1,
   }
 })

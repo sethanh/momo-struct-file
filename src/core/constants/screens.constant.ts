@@ -7,4 +7,5 @@ export const Screens = {
   ORDER_PAGE: 'OrderPage',
   TIME_PAGE: 'TimePage',
   SALON_PAGE: 'SalonPage',
+  SALON_DETAIL: 'SalonDetail',
 }

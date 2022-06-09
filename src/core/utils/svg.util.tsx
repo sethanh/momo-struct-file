@@ -24,6 +24,7 @@ import  TabProfileActive from '../../assets/Images/svg/tab_profile_active.svg'
 import  TabProfile from '../../assets/Images/svg/tab_profile.svg'
 
 import  IconSearch from '../../assets/Images/svg/ic_search.svg'
+import  IconSearchSL from '../../assets/Images/svg/ic_search_salon.svg'
 import IconRowDown from '../../assets/Images/svg/ic_row_down.svg'
 import IconSpa from '../../assets/Images/svg/ic_spa.svg'
 import IconSalon from '../../assets/Images/svg/ic_salon.svg'
@@ -33,6 +34,14 @@ import IconFill from '../../assets/Images/svg/ic_fill.svg'
 import IconClock from '../../assets/Images/svg/ic_clock.svg'
 import IconStar from '../../assets/Images/svg/ic_star.svg'
 import IconArrowss from '../../assets/Images/svg/ic_arrowss.svg'
+import IconNext from '../../assets/Images/svg/ic_next.svg'
+import IconClose from '../../assets/Images/svg/ic_close.svg'
+import IconWhiteBack from '../../assets/Images/svg/ic_white_back.svg'
+import IconHear from '../../assets/Images/svg/ic_hear.svg'
+import IconCart from '../../assets/Images/svg/ic_cart.svg'
+import IconWLocation from '../../assets/Images/svg/ic_white_location.svg'
+import IconWClock from '../../assets/Images/svg/ic_white_clock.svg'
+
 
 
 const IC={
@@ -45,7 +54,15 @@ const IC={
   IconFill,
   IconClock,
   IconStar,
-  IconArrowss
+  IconArrowss,
+  IconNext,
+  IconClose,
+  IconWhiteBack,
+  IconSearchSL,
+  IconCart,
+  IconHear,
+  IconWLocation,
+  IconWClock,
 }
 
 const ICTab={
@@ -58,7 +75,7 @@ const ICTab={
   TabOrder,
   TabOrderActive,
   TabProfile,
-  TabProfileActive
+  TabProfileActive,
 }
 
 export {
