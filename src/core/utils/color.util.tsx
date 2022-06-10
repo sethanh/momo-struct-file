@@ -37,6 +37,9 @@ export const Colors = {
   },
   BUTTON:{
     BLUE: '#0066FF',
-    GRAY: '#F0F2F5'
+    GRAY: '#F0F2F5',
+  },
+  BORDER:{
+    GRAY:'#DEE2EA'
   }
 }

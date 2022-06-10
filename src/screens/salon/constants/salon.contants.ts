@@ -8,31 +8,31 @@ const infors=[
   {name:'Venus Nail',address:'130 Đống Đa hải chây',image: IMAGE.IcLalui,star:4.8,quantify:252,open:'8:30 - 21:00',far:0.6,bgImage:IMAGE.BgSalon}
 ]
 const promotions=[
-  {promotion:30,name:'Dầu gội thảo mộc',address:'130 Đống Đa Hải Châu',price:115000,image: IMAGE.BgPromotion,flash:1800},
-  {promotion:10,name:'Dầu xả',address:'130 Sơn Trà',price:125000,image: IMAGE.BgPromotion02,flash:2000},
-  {promotion:5,name:'Sơn móng tay',address:'130 Đống Đa hải chây',price:55000,image: IMAGE.BgPromotion03,flash: 1200},
-  {promotion:5,name:'Sơn móng tay',address:'130 Đống Đa hải chây',price:55000,image: IMAGE.BgPromotion04,flash:1800},
+  {promotion:30,name:'Dầu gội thảo mộc',address:'130 Đống Đa Hải Châu',price:115000,image: IMAGE.BgPromotion,flash:4800,id:'001'},
+  {promotion:10,name:'Dầu xả',address:'130 Sơn Trà',price:125000,image: IMAGE.BgPromotion02,flash:5000,id:'002'},
+  {promotion:5,name:'Sơn móng tay',address:'130 Đống Đa hải chây',price:55000,image: IMAGE.BgPromotion03,flash: 1200,id:'003'},
+  {promotion:5,name:'Sơn móng tay',address:'130 Đống Đa hải chây',price:55000,image: IMAGE.BgPromotion04,flash:10800,id:'004'},
 ]
 
 const services01=[
-  {name:'Phục hồi tóc chẻ ngọn',price:115000,image: IMAGE.BgPromotion,time:30},
-  {name:'phụ hồi phủ lụa',price:125000,image: IMAGE.BgPromotion02,time:40, promotion:10},
-  {name:'phục hồi collagen',price:55000,image: IMAGE.BgPromotion03,time:120},
-  {name:'Phục hồi keratin',price:55000,image: IMAGE.BgPromotion04,time:90},
+  {name:'Phục hồi tóc chẻ ngọn',price:115000,image: IMAGE.BgPromotion,time:30,id:'101'},
+  {name:'phụ hồi phủ lụa',price:125000,image: IMAGE.BgPromotion02,time:40, promotion:10,id:'102'},
+  {name:'phục hồi collagen',price:55000,image: IMAGE.BgPromotion03,time:120,id:'103'},
+  {name:'Phục hồi keratin',price:55000,image: IMAGE.BgPromotion04,time:90,id:'104'},
 ]
 
 const services02=[
-  {name:'Nhuộm collagen',price:55000,image: IMAGE.BgPromotion03,time:120},
-  {name:'Nhuộm keratin',price:55000,image: IMAGE.BgPromotion04,time:90},
-  {name:'Nhuộm tóc chẻ ngọn',price:115000,image: IMAGE.BgPromotion,time:30, promotion:30},
-  {name:'Nhuộm phủ lụa',price:125000,image: IMAGE.BgPromotion02,time:40, promotion:15},
+  {name:'Nhuộm collagen',price:55000,image: IMAGE.BgPromotion03,time:120,id:'201'},
+  {name:'Nhuộm keratin',price:55000,image: IMAGE.BgPromotion04,time:90,id:'202'},
+  {name:'Nhuộm tóc chẻ ngọn',price:115000,image: IMAGE.BgPromotion,time:30, promotion:30,id:'203'},
+  {name:'Nhuộm phủ lụa',price:125000,image: IMAGE.BgPromotion02,time:40, promotion:15,id:'204'},
 ]
 
 const services03=[
-  {name:'Gội đầu collagen',price:55000,image: IMAGE.BgPromotion03,time:120},
-  {name:'Gội đầu keratin',price:55000,image: IMAGE.BgPromotion04,time:90},
-  {name:'Gội đầu tóc chẻ ngọn',price:115000,image: IMAGE.BgPromotion,time:30},
-  {name:'Gội đầu phủ lụa',price:125000,image: IMAGE.BgPromotion02,time:40, promotion:10},
+  {name:'Gội đầu collagen',price:55000,image: IMAGE.BgPromotion03,time:120,id:'301'},
+  {name:'Gội đầu keratin',price:55000,image: IMAGE.BgPromotion04,time:90,id:'302'},
+  {name:'Gội đầu tóc chẻ ngọn',price:115000,image: IMAGE.BgPromotion,time:30,id:'303'},
+  {name:'Gội đầu phủ lụa',price:125000,image: IMAGE.BgPromotion02,time:40, promotion:10,id:'304'},
 ]
 
 const services=[
@@ -42,33 +42,33 @@ const services=[
 ]
 
 const products01=[
-  {name:'Dầu gội phủ lụa',price:125000,image: IMAGE.IcProduct02, promotion:10},
-  {name:'Dầu gội bồ kết',price:55000,image: IMAGE.IcProduct03},
-  {name:'Dầu gội keratin',price:55000,image: IMAGE.IcProduct04},
-  {name:'Dầu gội phủ lụa',price:125000,image: IMAGE.IcProduct02, promotion:10},
-  {name:'Dầu gội bưởi',price:115000,image: IMAGE.IcProduct01},
-  {name:'Dầu gội bồ kết',price:55000,image: IMAGE.IcProduct03},
+  {name:'Dầu gội phủ lụa',price:125000,image: IMAGE.IcProduct02, promotion:10,id:'401'},
+  {name:'Dầu gội bồ kết',price:55000,image: IMAGE.IcProduct03,id:'402'},
+  {name:'Dầu gội keratin',price:55000,image: IMAGE.IcProduct04,id:'403'},
+  {name:'Dầu gội phủ lụa',price:125000,image: IMAGE.IcProduct02, promotion:10,id:'404'},
+  {name:'Dầu gội bưởi',price:115000,image: IMAGE.IcProduct01,id:'405'},
+  {name:'Dầu gội bồ kết',price:55000,image: IMAGE.IcProduct03,id:'406'},
 ]
 
 const products02=[
-  {name:'Dầu xả tóc chẻ ngọn',price:115000,image: IMAGE.IcProduct01, promotion:30},
-  {name:'Dầu xả phủ lụa',price:125000,image: IMAGE.IcProduct02, promotion:15},
-  {name:'Dầu xả collagen',price:55000,image: IMAGE.IcProduct03},
-  {name:'Dầu xả keratin',price:55000,image: IMAGE.IcProduct04},
+  {name:'Dầu xả tóc chẻ ngọn',price:115000,image: IMAGE.IcProduct01, promotion:30,id:'501'},
+  {name:'Dầu xả phủ lụa',price:125000,image: IMAGE.IcProduct02, promotion:15,id:'502'},
+  {name:'Dầu xả collagen',price:55000,image: IMAGE.IcProduct03,id:'503'},
+  {name:'Dầu xả keratin',price:55000,image: IMAGE.IcProduct04,id:'504'},
 ]
 
 const products03=[
-  {name:'Serum tóc chẻ ngọn',price:115000,image: IMAGE.IcProduct01},
-  {name:'Serum phủ lụa',price:125000,image: IMAGE.IcProduct02, promotion:10},
-  {name:'Serum collagen',price:55000,image: IMAGE.IcProduct03},
-  {name:'Serum keratin',price:55000,image: IMAGE.IcProduct04},
+  {name:'Serum tóc chẻ ngọn',price:115000,image: IMAGE.IcProduct01,id:'601'},
+  {name:'Serum phủ lụa',price:125000,image: IMAGE.IcProduct02, promotion:10,id:'602'},
+  {name:'Serum collagen',price:55000,image: IMAGE.IcProduct03,id:'603'},
+  {name:'Serum keratin',price:55000,image: IMAGE.IcProduct04,id:'604'},
 ]
 
 const products04=[
-  {name:'Thuốc dưỡng collagen',price:55000,image: IMAGE.IcProduct03},
-  {name:'Thuốc dưỡng tóc chẻ ngọn',price:115000,image: IMAGE.IcProduct01},
-  {name:'Thuốc dưỡng phủ lụa',price:125000,image: IMAGE.IcProduct02, promotion:10},
-  {name:'Thuốc dưỡng keratin',price:55000,image: IMAGE.IcProduct04},
+  {name:'Thuốc dưỡng collagen',price:55000,image: IMAGE.IcProduct03,id:'701'},
+  {name:'Thuốc dưỡng tóc chẻ ngọn',price:115000,image: IMAGE.IcProduct01,id:'702'},
+  {name:'Thuốc dưỡng phủ lụa',price:125000,image: IMAGE.IcProduct02, promotion:10,id:'703'},
+  {name:'Thuốc dưỡng keratin',price:55000,image: IMAGE.IcProduct04,id:'704'},
 ]
 
 const products=[

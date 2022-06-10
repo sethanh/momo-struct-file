@@ -1,12 +1,12 @@
 import { useNavigation } from '@react-navigation/native'
-import { Colors, Container, Fonts, fontSize, horizontalScale, IC, IMAGE, Modal, Button,Screens } from '@src/core'
+import { Colors, Container, Fonts, fontSize, horizontalScale, IC, Modal, Button,Screens } from '@src/core'
 import React, { useState } from 'react'
 import { StyleSheet, View, Text, Image, FlatList, TouchableOpacity  } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 import { salonConst } from '../../constants'
 
 const SalonPage = () => {
-  const navigation = useNavigation()
+  const navigation = useNavigation<any>()
 
   const handleNavigator = (screen: string, data?: any) => {
     data ? navigation.navigate(screen, data) : navigation.navigate(screen)
@@ -26,8 +26,9 @@ const SalonPage = () => {
         </Text>
         {renderInfoView(IC.IconLocation, item.address)}
         <View style={[styles.row]}>
-          {renderInfoView(IC.IconStar, `${item.star}(${item.quantify})`)}
-          {renderInfoView(IC.IconArrowss, item.far)}
+          {renderInfoView(IC.IconStar, `${item.star} (${item.quantify} đánh giá)`)}
+          <Text style={{padding:5}}></Text>
+          {renderInfoView(IC.IconArrowss, `${item.far} km`)}
         </View>
         {renderInfoView(IC.IconClock, item.open)}
 
@@ -42,8 +43,8 @@ const SalonPage = () => {
     </View>
   )
   
-  const rederFillView = () => (
-    <View style={[styles.bgFill, styles.boderTop]}>
+  const renderFillView = () => (
+    <View style={[styles.bgFill, styles.borderTop]}>
       <View style={[styles.row, styles.space]}>
         <TouchableOpacity onPress={()=>setShowFill(false)}>
           <IC.IconClose />
@@ -70,7 +71,7 @@ const SalonPage = () => {
         />
       </View>
       <Modal.Light visible={showFill} onCloseModal={()=>setShowFill(false)}>
-          {rederFillView()}
+          {renderFillView()}
       </Modal.Light>
     </Container.View>
   )
@@ -144,7 +145,7 @@ const styles = StyleSheet.create({
   bold: {
     fontWeight: '700',
   },
-  boderTop: {
+  borderTop: {
     borderTopLeftRadius: horizontalScale(16),
     borderTopRightRadius: horizontalScale(16)
   }

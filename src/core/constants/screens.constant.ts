@@ -8,4 +8,5 @@ export const Screens = {
   TIME_PAGE: 'TimePage',
   SALON_PAGE: 'SalonPage',
   SALON_DETAIL: 'SalonDetail',
+  CART_DETAIL: 'CartDetail'
 }

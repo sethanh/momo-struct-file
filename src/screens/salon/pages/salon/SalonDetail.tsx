@@ -1,23 +1,39 @@
-import { Colors, Container, Fonts, fontSize, horizontalScale, IC, IMAGE, Modal, Button, formatMoney } from '@src/core'
+import { Colors, Container, Fonts, fontSize, horizontalScale, IC, formatMoney,formatFlash } from '@src/core'
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, Text, Image, FlatList, TouchableOpacity, ImageBackground } from 'react-native'
 import { salonConst } from '../../constants'
+import { useDispatch, useSelector } from 'react-redux'
+import {actionAddCart,actionCart} from '@src/screens'
+
+var findIndex = (products:any, id:string) => {
+  var result = 0;
+  products.forEach((product:any) => {
+      if (product.id === id) {
+          result = product.quantify;
+      }
+  });
+  return result;
+}
 
 const SalonPage = ({ route }: any) => {
   const { params } = route
   const { options, promotions, services,products } = salonConst
+  const dispatch = useDispatch()
 
   const [option, setOption] = useState('Khuyến mãi')
-  const [fillServiece, setFillServiece] = useState(0)
+  const [fillService, setFillService] = useState(0)
 
   const [count,setCount] = useState(0)
 
-  const renderOptionsItem = ({ item }: any) => (
-    <TouchableOpacity style={[styles.bgOptions, styles.row]} onPress={() => setOption(item)}>
-      <Text style={[styles.txtSelected, item === option && { color: Colors.TAB.ACTIVE }]}>{item}</Text>
-      <Text style={[styles.txtSelected, styles.mgsltxt, { color: Colors.TXT.GRAY }]}>|</Text>
-    </TouchableOpacity>
-  )
+  const cart =useSelector((state: any) => {
+    return state.cart.data
+  })
+  
+  const handleAddCard = (item: any) =>{
+    dispatch(actionAddCart(item))
+  }
+
+
   useEffect(() => {
     const timer = setInterval(() => {
         setCount(prevCount=>prevCount+1)
@@ -33,7 +49,7 @@ const SalonPage = ({ route }: any) => {
         return renderPromotionView()
         break;
       case 'Dịch vụ':
-        return renderServieceView()
+        return renderServiceView()
         break;
       case 'Sản phẩm':
         return renderProductView()
@@ -43,12 +59,36 @@ const SalonPage = ({ route }: any) => {
     }
   }
 
-  const renderFlashView=(value:number)=>(
-    <View style={[styles.bgFlash]}>
-      <Text>{((value-count)-(value-count)%60)/60}:{(value-count)%60}</Text>
-    </View>
+  const renderOptionsItem = ({ item }: any) => (
+    <TouchableOpacity style={[styles.bgOptions, styles.row]} onPress={() => setOption(item)}>
+      <Text style={[styles.txtSelected, item === option && { color: Colors.TAB.ACTIVE }]}>{item}</Text>
+      <Text style={[styles.txtSelected, styles.mgsltxt, { color: Colors.TXT.GRAY }]}>|</Text>
+    </TouchableOpacity>
   )
 
+  const renderFlashView=(value:number)=>{
+    var rt=formatFlash(value-count>0?value-count:0)
+    return(
+    <View style={[styles.bgFlash]}>
+      <Text style={[styles.txtFlash]}>{rt[0]}</Text>
+      <Text style={[styles.hpFlash]}>:</Text>
+      <Text style={[styles.txtFlash]}>{rt[1]}</Text>
+      <Text style={[styles.hpFlash]}>:</Text>
+      <Text style={[styles.txtFlash]}>{rt[2]}</Text>
+    </View>
+  )}
+
+  const renderCardItem = (id:string)=>{
+    let quantify= findIndex(cart,id)
+    if(quantify){
+      return (
+        <View style={styles.qtfCart} >
+          <Text style={styles.txtCart}>{quantify}</Text>
+        </View>
+      )
+    }
+    return null
+  }
   const renderItemPromotion = ({ item }: any) => (
     <View style={{ paddingVertical: horizontalScale(16) }}>
       <ImageBackground
@@ -69,7 +109,8 @@ const SalonPage = ({ route }: any) => {
             <Text style={[styles.txtAd, styles.txtpreprice]}>{formatMoney(item.price)}đ</Text>
           </View>
         </View>
-        <TouchableOpacity style={[styles.bgAddCard]}>
+        <TouchableOpacity style={[styles.bgAddCard]} onPress={()=>handleAddCard(item)}>
+          {renderCardItem(item.id)}
           <IC.IconCart />
         </TouchableOpacity>
 
@@ -87,9 +128,9 @@ const SalonPage = ({ route }: any) => {
     </View>
   )
 
-  const renderOptionsServiece = ({ item }: any) => (
-    <TouchableOpacity style={[styles.bgServiece, styles.row, item.id === fillServiece && { backgroundColor: Colors.BUTTON.BLUE }]} onPress={() => setFillServiece(item.id)}>
-      <Text style={[item.id === fillServiece && { color: Colors.hFFFFFF }]}>{item.name}</Text>
+  const renderOptionsService = ({ item }: any) => (
+    <TouchableOpacity style={[styles.bgService, styles.row, item.id === fillService && { backgroundColor: Colors.BUTTON.BLUE }]} onPress={() => setFillService(item.id)}>
+      <Text style={[item.id === fillService && { color: Colors.hFFFFFF }]}>{item.name}</Text>
     </TouchableOpacity>
   )
 
@@ -98,14 +139,14 @@ const SalonPage = ({ route }: any) => {
       <View style={{ marginVertical: horizontalScale(16) }}>
         <FlatList
           data={products}
-          renderItem={renderOptionsServiece}
-          showsVerticalScrollIndicator={false}
+          renderItem={renderOptionsService}
+          showsHorizontalScrollIndicator={false}
           horizontal
         />
       </View>
       <View style={{flex: 1}}>
         <FlatList
-          data={products[fillServiece].data}
+          data={products[fillService].data}
           renderItem={renderItemService}
           showsVerticalScrollIndicator={false}
         />
@@ -113,19 +154,19 @@ const SalonPage = ({ route }: any) => {
     </View>
   )
 
-  const renderServieceView = () => (
+  const renderServiceView = () => (
     <View style={[{ paddingLeft: horizontalScale(16),flex:1 }]}>
       <View style={{ marginVertical: horizontalScale(16) }}>
         <FlatList
           data={services}
-          renderItem={renderOptionsServiece}
-          showsVerticalScrollIndicator={false}
+          renderItem={renderOptionsService}
+          showsHorizontalScrollIndicator={false}
           horizontal
         />
       </View>
       <View style={{flex: 1}}>
         <FlatList
-          data={services[fillServiece].data}
+          data={services[fillService].data}
           renderItem={renderItemService}
           showsVerticalScrollIndicator={false}
         />
@@ -163,7 +204,9 @@ const SalonPage = ({ route }: any) => {
           </View>
         }
       </View>
-      <TouchableOpacity style={[styles.bgAddCard, { alignSelf: 'center' }]}>
+      <TouchableOpacity style={[styles.bgAddCard, { alignSelf: 'center' }]} 
+        onPress={()=>handleAddCard(item)}>
+        {renderCardItem(item.id)}
         <IC.IconCart />
       </TouchableOpacity>
     </View>
@@ -176,7 +219,7 @@ const SalonPage = ({ route }: any) => {
           <FlatList
             data={options}
             renderItem={renderOptionsItem}
-            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
             horizontal
           />
         </View>
@@ -337,7 +380,7 @@ const styles = StyleSheet.create({
     height: horizontalScale(32),
     marginRight: horizontalScale(16)
   },
-  bgServiece: {
+  bgService: {
     paddingHorizontal: horizontalScale(16),
     height: horizontalScale(32),
     backgroundColor: Colors.BUTTON.GRAY,
@@ -358,6 +401,39 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: horizontalScale(16),
     right: horizontalScale(32),
-    backgroundColor: 'white'
+    flexDirection:'row'
+  },
+  txtFlash:{
+    backgroundColor: Colors.TXT.BLACK,
+    color: Colors.hFFFFFF,
+    paddingHorizontal: horizontalScale(5),
+    fontSize: fontSize(16),
+    lineHeight: fontSize(22),
+    fontWeight: '700',
+    fontFamily: Fonts.Roboto,
+    borderRadius: 5,
+    overflow: 'hidden'
+  },
+  hpFlash:{
+    color:Colors.TXT.BLACK,
+    fontSize: fontSize(16),
+    lineHeight: fontSize(22),
+    fontFamily: Fonts.Roboto,
+    marginHorizontal: horizontalScale(4),
+    fontWeight: '500',
+  },
+  qtfCart:{
+    position:'absolute',
+    width: horizontalScale(16),
+    height: horizontalScale(16),
+    backgroundColor: Colors.TXT.RED,
+    right: -horizontalScale(8),
+    top: -horizontalScale(8),
+    zIndex:100,
+    borderRadius: horizontalScale(8)
+  },
+  txtCart:{
+    color: 'white',
+    alignSelf:'center'
   }
 })

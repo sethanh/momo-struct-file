@@ -10,6 +10,16 @@
 //   let mi = new Intl.DateTimeFormat('en', { minute: 'numeric' }).format(date);
 //   return `${ho.slice(0,1)}:${mi}`;
 // }
+export function formatFlash(number:any) {
+  var stNum= ['0','0','0']
+  let seconds= number%60
+  let newNum= number-seconds
+  let hours= (newNum-newNum%3600)/3600
+  let minutes= (newNum-hours*3600)/60
+  stNum=[hours<10?`0${hours}`:`${hours}`,minutes<10?`0${minutes}`:`${minutes}`,seconds<10?`0${seconds}`:`${seconds}`]
+  return stNum
+}
+
 export function formatMoney(number:any) {
   var stNum= String(number)
   let l= String(number).length

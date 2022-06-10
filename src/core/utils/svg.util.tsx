@@ -41,6 +41,8 @@ import IconHear from '../../assets/Images/svg/ic_hear.svg'
 import IconCart from '../../assets/Images/svg/ic_cart.svg'
 import IconWLocation from '../../assets/Images/svg/ic_white_location.svg'
 import IconWClock from '../../assets/Images/svg/ic_white_clock.svg'
+import IconPlus from '../../assets/Images/svg/ic_plus.svg'
+import IconMinus from '../../assets/Images/svg/ic_minus.svg'
 
 
 
@@ -63,6 +65,8 @@ const IC={
   IconHear,
   IconWLocation,
   IconWClock,
+  IconPlus,
+  IconMinus
 }
 
 const ICTab={

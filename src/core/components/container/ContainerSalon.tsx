@@ -1,10 +1,11 @@
 import { Colors, fontSize, heightSatusbar, horizontalScale, IconBack, IC, Fonts } from '@src/core/utils'
-import React from 'react'
+import React,{useMemo} from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { StyleSheet, StatusBar, View, TouchableOpacity, Text, ViewStyle, Image, ImageBackground } from 'react-native'
 import { FormProvider, useForm } from 'react-hook-form'
-import { Form } from '@src/core'
+import { Form,Screens } from '@src/core'
 import { SvgProps } from 'react-native-svg'
+import { useDispatch, useSelector } from 'react-redux'
 
 interface ContainerProps {
   children: JSX.Element | JSX.Element[] | null
@@ -22,13 +23,23 @@ interface FormValue {
 }
 
 const ContainerView = (props: ContainerProps) => {
-  const { children, headerShow, title, showRight, onRightClick, styleView, IconRight, showLeft, data } = props
-  const navigation = useNavigation()
+  const { children, onRightClick, styleView, IconRight, data } = props
+  const navigation = useNavigation<any>()
 
   const form = useForm<FormValue>({
     defaultValues: {},
     mode: 'onChange'
   })
+  const cart =useSelector((state: any) => {
+    return state.cart.data
+  })
+
+  const total = useMemo(()=>{
+    const result:any= cart.reduce((result:any,prod:any)=>{
+       return result+ prod.quantify
+    },0);
+    return result;
+ },[cart]);
 
   const renderInfoView = (Icon: React.FC<SvgProps>, value: string) => (
     <View style={[styles.rowSalon, styles.mgTxt]}>
@@ -47,7 +58,7 @@ const ContainerView = (props: ContainerProps) => {
         {renderInfoView(IC.IconWLocation, item.address)}
         <View style={[styles.rowSalon, styles.mgTxt, { marginBottom: horizontalScale(10) }]}>
           {renderInfoView(IC.IconStar,`${item.star} ( ${item.quantify} đánh giá)`)}
-          <Text style={[styles.txtAd,{marginHorizontal:horizontalScale(9)}]}>|</Text>
+          <Text style={[styles.txtAd,{marginRight:4}]}>|</Text>
           {renderInfoView(IC.IconWClock, item.open)}
         </View>
       </View>
@@ -87,7 +98,15 @@ const ContainerView = (props: ContainerProps) => {
                 />
               </FormProvider>
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity 
+            onPress={()=>total?navigation.navigate(Screens.CART_DETAIL,data):null}>
+              {total?
+              <View style={styles.qtfCart} >
+                <Text style={styles.txtCart}>{total}</Text>
+              </View>
+              :null
+              }
+              
               <IC.IconCart style={{ marginLeft: horizontalScale(19) }} />
             </TouchableOpacity>
             <TouchableOpacity>
@@ -206,5 +225,19 @@ const styles = StyleSheet.create({
   },
   rowSalon:{
     flexDirection: 'row'
+  },
+  qtfCart:{
+    position:'absolute',
+    width: horizontalScale(16),
+    height: horizontalScale(16),
+    backgroundColor: Colors.TXT.RED,
+    right: -horizontalScale(8),
+    top: -horizontalScale(8),
+    zIndex:100,
+    borderRadius: horizontalScale(8)
+  },
+  txtCart:{
+    color: 'white',
+    alignSelf:'center'
   }
 })
