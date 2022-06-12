@@ -1,5 +1,5 @@
 import { Colors, Container, Fonts, fontSize, formatMoney, horizontalScale, IC, Button } from '@src/core'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, Image, FlatList } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 import { useDispatch, useSelector } from 'react-redux'
@@ -20,6 +20,20 @@ const CartPage = ({ route }: any) => {
   const handleRemoveCard = (item: any) =>{
     dispatch(actionRemoveCart(item))
   }
+
+  const total = useMemo(()=>{
+    const result:any= cart.reduce((result:any,prod:any)=>{
+       return result+ prod.quantify
+    },0);
+    return result;
+  },[cart])
+
+  const payment = useMemo(()=>{
+    const result:any= cart.reduce((result:any,prod:any)=>{
+       return prod.promotion?(result+((prod.quantify*prod.price*(100-prod.promotion))/100)):(result+ prod.quantify*prod.price)
+    },0);
+    return result;
+  },[cart])
 
   const renderInfoView = (Icon: React.FC<SvgProps>, value: string) => (
     <View style={[styles.row, styles.mgTxt]}>
@@ -93,9 +107,9 @@ const CartPage = ({ route }: any) => {
           <View style={[styles.row, styles.space]}>
             <View style={[styles.row]}>
               <Text style={[styles.txtTitle, { fontWeight: '400' }]}>Tổng tiền</Text>
-              <Text style={[styles.txtTitle, { fontWeight: '400', color: Colors.TXT.UNACTIVE }]}>(5 sản phẩm)</Text>
+              <Text style={[styles.txtTitle, { fontWeight: '400', color: Colors.TXT.UNACTIVE }]}>({total} sản phẩm)</Text>
             </View>
-            <Text style={[styles.txtTitle, { color: Colors.BUTTON.BLUE }]}>{formatMoney(5678889)}đ</Text>
+            <Text style={[styles.txtTitle, { color: Colors.BUTTON.BLUE }]}>{formatMoney(payment)}đ</Text>
           </View>
           <Button.Main label='Thanh toán' />
         </View>

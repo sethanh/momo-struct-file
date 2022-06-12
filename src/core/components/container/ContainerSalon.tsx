@@ -39,7 +39,7 @@ const ContainerView = (props: ContainerProps) => {
        return result+ prod.quantify
     },0);
     return result;
- },[cart]);
+  },[cart])
 
   const renderInfoView = (Icon: React.FC<SvgProps>, value: string) => (
     <View style={[styles.rowSalon, styles.mgTxt]}>

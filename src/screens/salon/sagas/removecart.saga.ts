@@ -18,7 +18,15 @@ function* onRemove({payload}:any):any {
   var data= state.cart.data
   var index = findIndex(data,payload.id)
   var rs: any[]= JSON.parse(JSON.stringify(data))
-  rs[index].quantify=data[index].quantify-1
+  
+  if(data[index].quantify-1===0){
+    rs.splice(index,1)
+    console.log(rs)
+  }
+  else{
+    rs[index].quantify=data[index].quantify-1
+  }
+ 
   yield put(actionRemoveCartSuccess(rs))
 }
 
