@@ -1,10 +1,10 @@
 import { useNavigation } from '@react-navigation/native'
-import { Colors, Container, Fonts, fontSize, horizontalScale, IC, Modal, Button,Screens } from '@src/core'
+import { Colors, Container, Fonts, fontSize, horizontalScale, IC, Modal, Button, Screens } from '@src/core'
 import React, { useState } from 'react'
-import { StyleSheet, View, Text, Image, FlatList, TouchableOpacity  } from 'react-native'
+import { StyleSheet, View, Text, Image, FlatList, TouchableOpacity } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 import { salonConst } from '../../constants'
-
+import { Slider } from '@miblanchard/react-native-slider'
 const SalonPage = () => {
   const navigation = useNavigation<any>()
 
@@ -14,11 +14,18 @@ const SalonPage = () => {
 
 
   const [showFill, setShowFill] = useState(false)
+  const [sofar, setSoFar] = useState<any>(1)
+  const [star, setStar] = useState(0)
 
-  const { infors } = salonConst
+  const { infors, fillstar } = salonConst
+
+  const onNoFill = () => {
+    setSoFar(10),
+      setStar(0)
+  }
 
   const renderItemSalon = ({ item }: any) => (
-    <TouchableOpacity style={[styles.bgSalon, styles.row]} onPress={()=>handleNavigator(Screens.SALON_DETAIL,item)}>
+    <TouchableOpacity style={[styles.bgSalon, styles.row]} onPress={() => handleNavigator(Screens.SALON_DETAIL, item)}>
       <Image source={item.image} style={[styles.logo]} />
       <View style={[styles.infoSalon]}>
         <Text style={[styles.txtTitle]}>
@@ -27,7 +34,7 @@ const SalonPage = () => {
         {renderInfoView(IC.IconLocation, item.address)}
         <View style={[styles.row]}>
           {renderInfoView(IC.IconStar, `${item.star} (${item.quantify} đánh giá)`)}
-          <Text style={{padding:5}}></Text>
+          <Text style={{ padding: 5 }}></Text>
           {renderInfoView(IC.IconArrowss, `${item.far} km`)}
         </View>
         {renderInfoView(IC.IconClock, item.open)}
@@ -42,26 +49,47 @@ const SalonPage = () => {
       <Text style={[styles.txtAd]}>{value}</Text>
     </View>
   )
-  
+
+  const renderStar=(item:string,index:number)=>(
+    <TouchableOpacity style={[styles.row, styles.btnFillStar]} key={index}
+            onPress={() => { setStar(Number(item)) }}>
+            <Text style={[Number(item) === star && { color: Colors.BUTTON.BLUE }]}
+            >{Number(item)===3&&'<3' || item} 
+            </Text>
+            {Number(item) === star && <IC.IconBlueStar /> || <IC.IconGrayStar />}
+    </TouchableOpacity>
+  )
   const renderFillView = () => (
     <View style={[styles.bgFill, styles.borderTop]}>
       <View style={[styles.row, styles.space]}>
-        <TouchableOpacity onPress={()=>setShowFill(false)}>
+        <TouchableOpacity onPress={() => setShowFill(false)}>
           <IC.IconClose />
         </TouchableOpacity>
         <Text style={[styles.txtTitle, styles.bold]}>Bộ lọc</Text>
-        <Text style={styles.txtTitle}>Xóa</Text>
+        <TouchableOpacity onPress={() => onNoFill()}>
+          <Text style={styles.txtTitle}>Xóa</Text>
+        </TouchableOpacity>
       </View>
-      <Text style={[styles.txtTitle, styles.bold]}>Vị trí</Text>
-      <Text style={[styles.txtTitle]}>Dưới 3.5 km</Text>
-      <View style={styles.line}></View>
+      <Text style={[styles.txtTitle, styles.bold,{marginVertical: horizontalScale(8)}]}>Vị trí</Text>
+      <Text style={[]}>{`Dưới ${(sofar * 10).toFixed(1)} km`}</Text>
+      <Slider
+        value={sofar}
+        onValueChange={value => setSoFar(value)}
+      />
+      <View style={[styles.line,{marginBottom:horizontalScale(16)}]}></View>
       <Text style={[styles.txtTitle, styles.bold]}>Điểm đánh giá của khách</Text>
-      <Button.Main label='Áp dụng'></Button.Main>
+      <View style={[styles.row, styles.space, styles.bgBtnFill]}>
+        {fillstar.map((item, index) => (
+          renderStar(item,index)
+        ))}
+
+      </View>
+      <Button.Main label='Áp dụng' ></Button.Main>
     </View>
   )
 
   return (
-    <Container.View headerShow title='Danh sách salon' showLeft showRight IconRight={IC.IconFill} onRightClick={()=>setShowFill(!showFill)}>
+    <Container.View headerShow title='Danh sách salon' showLeft showRight IconRight={IC.IconFill} onRightClick={() => setShowFill(!showFill)}>
       <View style={styles.container}>
         <View style={styles.line}></View>
         <FlatList
@@ -70,8 +98,8 @@ const SalonPage = () => {
           showsVerticalScrollIndicator={false}
         />
       </View>
-      <Modal.Light visible={showFill} onCloseModal={()=>setShowFill(false)}>
-          {renderFillView()}
+      <Modal.Light visible={showFill} onCloseModal={() => setShowFill(false)}>
+        {renderFillView()}
       </Modal.Light>
     </Container.View>
   )
@@ -148,5 +176,25 @@ const styles = StyleSheet.create({
   borderTop: {
     borderTopLeftRadius: horizontalScale(16),
     borderTopRightRadius: horizontalScale(16)
+  },
+  btnFillStar: {
+    backgroundColor: Colors.BUTTON.GRAY,
+    paddingHorizontal: horizontalScale(16),
+    paddingVertical: horizontalScale(9.39),
+    borderRadius: horizontalScale(4),
+
+  },
+  bgBtnFill: {
+    marginBottom: horizontalScale(102),
+    marginTop: horizontalScale(8)
+  },
+  bgSlider: {
+    backgroundColor: Colors.hFFFFFF,
+    elevation: 2,
+    shadowColor: Colors.TXT.BLACK,
+    shadowOffset: {
+      width: 2,
+      height: 2
+    },
   }
 })

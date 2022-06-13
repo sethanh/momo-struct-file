@@ -9,30 +9,30 @@ const infors=[
 ]
 const promotions=[
   {promotion:30,name:'Dầu gội thảo mộc',address:'130 Đống Đa Hải Châu',price:115000,image: IMAGE.BgPromotion,flash:4800,id:'001'},
-  {promotion:10,name:'Dầu xả',address:'130 Sơn Trà',price:125000,image: IMAGE.BgPromotion02,flash:5000,id:'002'},
-  {promotion:5,name:'Sơn móng tay',address:'130 Đống Đa hải chây',price:55000,image: IMAGE.BgPromotion03,flash: 1200,id:'003'},
-  {promotion:5,name:'Sơn móng tay',address:'130 Đống Đa hải chây',price:55000,image: IMAGE.BgPromotion04,flash:10800,id:'004'},
+  {type:1,promotion:10,name:'Massage toàn thân',address:'130 Sơn Trà',price:125000,image: IMAGE.BgPromotion02,flash:5000,id:'002'},
+  {type:1,promotion:5,name:'Cắt tóc nam',address:'130 Đống Đa Hải Châu',price:55000,image: IMAGE.BgPromotion03,flash: 1200,id:'003'},
+  {promotion:5,name:'Sơn móng tay',address:'130 Đống Đa Hải Châu',price:55000,image: IMAGE.BgPromotion04,flash:10800,id:'004'},
 ]
 
 const services01=[
-  {name:'Phục hồi tóc chẻ ngọn',price:115000,image: IMAGE.BgPromotion,time:30,id:'101'},
-  {name:'phụ hồi phủ lụa',price:125000,image: IMAGE.BgPromotion02,time:40, promotion:10,id:'102'},
-  {name:'phục hồi collagen',price:55000,image: IMAGE.BgPromotion03,time:120,id:'103'},
-  {name:'Phục hồi keratin',price:55000,image: IMAGE.BgPromotion04,time:90,id:'104'},
+  {type:1,name:'Phục hồi tóc chẻ ngọn',price:115000,image: IMAGE.BgPromotion,time:30,id:'101'},
+  {type:1,name:'phụ hồi phủ lụa',price:125000,image: IMAGE.BgPromotion02,time:40, promotion:10,id:'102'},
+  {type:1,name:'phục hồi collagen',price:55000,image: IMAGE.BgPromotion03,time:120,id:'103'},
+  {type:1,name:'Phục hồi keratin',price:55000,image: IMAGE.BgPromotion04,time:90,id:'104'},
 ]
 
 const services02=[
-  {name:'Nhuộm collagen',price:55000,image: IMAGE.BgPromotion03,time:120,id:'201'},
-  {name:'Nhuộm keratin',price:55000,image: IMAGE.BgPromotion04,time:90,id:'202'},
-  {name:'Nhuộm tóc chẻ ngọn',price:115000,image: IMAGE.BgPromotion,time:30, promotion:30,id:'203'},
-  {name:'Nhuộm phủ lụa',price:125000,image: IMAGE.BgPromotion02,time:40, promotion:15,id:'204'},
+  {type:1,name:'Nhuộm collagen',price:55000,image: IMAGE.BgPromotion03,time:120,id:'201'},
+  {type:1,name:'Nhuộm keratin',price:55000,image: IMAGE.BgPromotion04,time:90,id:'202'},
+  {type:1,name:'Nhuộm tóc chẻ ngọn',price:115000,image: IMAGE.BgPromotion,time:30, promotion:30,id:'203'},
+  {type:1,name:'Nhuộm phủ lụa',price:125000,image: IMAGE.BgPromotion02,time:40, promotion:15,id:'204'},
 ]
 
 const services03=[
-  {name:'Gội đầu collagen',price:55000,image: IMAGE.BgPromotion03,time:120,id:'301'},
-  {name:'Gội đầu keratin',price:55000,image: IMAGE.BgPromotion04,time:90,id:'302'},
-  {name:'Gội đầu tóc chẻ ngọn',price:115000,image: IMAGE.BgPromotion,time:30,id:'303'},
-  {name:'Gội đầu phủ lụa',price:125000,image: IMAGE.BgPromotion02,time:40, promotion:10,id:'304'},
+  {type:1,name:'Gội đầu collagen',price:55000,image: IMAGE.BgPromotion03,time:120,id:'301'},
+  {type:1,name:'Gội đầu keratin',price:55000,image: IMAGE.BgPromotion04,time:90,id:'302'},
+  {type:1,name:'Gội đầu tóc chẻ ngọn',price:115000,image: IMAGE.BgPromotion,time:30,id:'303'},
+  {type:1,name:'Gội đầu phủ lụa',price:125000,image: IMAGE.BgPromotion02,time:40, promotion:10,id:'304'},
 ]
 
 const services=[
@@ -81,10 +81,12 @@ const products=[
 const options=[
   'Khuyến mãi', 'Dịch vụ', 'Sản phẩm', 'Gói dịch vụ'
 ]
+const fillstar=['3','3.5','4','4.5','5']
 export const salonConst = {
   infors,
   options,
   promotions,
   services,
-  products
+  products,
+  fillstar
 }

@@ -33,6 +33,12 @@ const ContainerView = (props: ContainerProps) => {
   const cart =useSelector((state: any) => {
     return state.cart.data
   })
+  const productsCart =useSelector((state: any) => {
+    return state.cart.products
+  })
+  const servicesCart =useSelector((state: any) => {
+    return state.cart.services
+  })
 
   const total = useMemo(()=>{
     const result:any= cart.reduce((result:any,prod:any)=>{
@@ -40,6 +46,20 @@ const ContainerView = (props: ContainerProps) => {
     },0);
     return result;
   },[cart])
+
+  const totalServices = useMemo(()=>{
+    const result:any= servicesCart.reduce((result:any,prod:any)=>{
+       return result+ prod.quantify
+    },0);
+    return result;
+  },[servicesCart])
+
+  const totalProducts = useMemo(()=>{
+    const result:any= productsCart.reduce((result:any,prod:any)=>{
+       return result+ prod.quantify
+    },0);
+    return result;
+  },[productsCart])
 
   const renderInfoView = (Icon: React.FC<SvgProps>, value: string) => (
     <View style={[styles.rowSalon, styles.mgTxt]}>
@@ -99,10 +119,10 @@ const ContainerView = (props: ContainerProps) => {
               </FormProvider>
             </View>
             <TouchableOpacity 
-            onPress={()=>total?navigation.navigate(Screens.CART_DETAIL,data):null}>
-              {total?
+            onPress={()=>totalProducts+totalServices?navigation.navigate(Screens.CART_DETAIL,data):null}>
+              {totalProducts+totalServices?
               <View style={styles.qtfCart} >
-                <Text style={styles.txtCart}>{total}</Text>
+                <Text style={styles.txtCart}>{totalProducts+totalServices}</Text>
               </View>
               :null
               }

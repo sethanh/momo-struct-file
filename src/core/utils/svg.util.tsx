@@ -43,6 +43,8 @@ import IconWLocation from '../../assets/Images/svg/ic_white_location.svg'
 import IconWClock from '../../assets/Images/svg/ic_white_clock.svg'
 import IconPlus from '../../assets/Images/svg/ic_plus.svg'
 import IconMinus from '../../assets/Images/svg/ic_minus.svg'
+import IconBlueStar from '../../assets/Images/svg/ic_blue_star.svg'
+import IconGrayStar from '../../assets/Images/svg/ic_gray_star.svg'
 
 
 
@@ -66,7 +68,9 @@ const IC={
   IconWLocation,
   IconWClock,
   IconPlus,
-  IconMinus
+  IconMinus,
+  IconBlueStar,
+  IconGrayStar
 }
 
 const ICTab={

@@ -1,10 +1,13 @@
 import { Colors, Container, Fonts, fontSize, formatMoney, horizontalScale, IC, Button } from '@src/core'
 import React, { useMemo } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, Image, FlatList } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity, Image, FlatList,SectionList, SectionListData } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 import { useDispatch, useSelector } from 'react-redux'
-import { actionAddCart,actionRemoveCart } from '@src/screens'
+import { actionAddProductCart,actionAddServiceCart, actionRemoveProductCart, actionRemoveServiceCart } from '@src/screens'
 
+interface IHeader {
+  section: SectionListData<{ title: string }>
+}
 
 const CartPage = ({ route }: any) => {
   const { params } = route
@@ -13,27 +16,58 @@ const CartPage = ({ route }: any) => {
     return state.cart.data
   })
 
+  const productsCart =useSelector((state: any) => {
+    return state.cart.products
+  })
+  const servicesCart =useSelector((state: any) => {
+    return state.cart.services
+  })
+
+  const Cart = useMemo(()=>{
+    const result:any= [
+      {
+        title:'Dịch vụ',
+        data: servicesCart
+      },
+      {
+        title:'Sản phẩm',
+        data: productsCart
+      }
+    ]
+    return result;
+  },[servicesCart,productsCart])
+
   const handleAddCard = (item: any) =>{
-    dispatch(actionAddCart(item))
+    item.type&&dispatch(actionAddServiceCart(item))||dispatch(actionAddProductCart(item))
   }
 
   const handleRemoveCard = (item: any) =>{
-    dispatch(actionRemoveCart(item))
+    item.type&&dispatch(actionRemoveServiceCart(item))||dispatch(actionRemoveProductCart(item))
   }
 
   const total = useMemo(()=>{
-    const result:any= cart.reduce((result:any,prod:any)=>{
+    const results:any= servicesCart.reduce((result:any,prod:any)=>{
        return result+ prod.quantify
-    },0);
-    return result;
-  },[cart])
+    },0)
+    const resultp:any= productsCart.reduce((result:any,prod:any)=>{
+      return result+ prod.quantify
+   },0)
+    return resultp+results
+  },[servicesCart,productsCart])
 
   const payment = useMemo(()=>{
-    const result:any= cart.reduce((result:any,prod:any)=>{
+    const resultp:any= productsCart.reduce((result:any,prod:any)=>{
        return prod.promotion?(result+((prod.quantify*prod.price*(100-prod.promotion))/100)):(result+ prod.quantify*prod.price)
-    },0);
-    return result;
-  },[cart])
+    },0)
+    const results:any= servicesCart.reduce((result:any,prod:any)=>{
+      return prod.promotion?(result+((prod.quantify*prod.price*(100-prod.promotion))/100)):(result+ prod.quantify*prod.price)
+   },0)
+   return resultp+results
+  },[servicesCart,productsCart])
+
+  const renderSectionHeader=({section: {title}}: any) => (
+    <Text style={styles.titleSection}>{title}</Text>
+  );
 
   const renderInfoView = (Icon: React.FC<SvgProps>, value: string) => (
     <View style={[styles.row, styles.mgTxt]}>
@@ -96,9 +130,10 @@ const CartPage = ({ route }: any) => {
           </TouchableOpacity>
         </View>
         <View style={[styles.line]} />
-        <View style={{ flex: 1, paddingLeft: horizontalScale(16) }}>
-          <FlatList
-            data={cart}
+        <View style={{ flex: 1, paddingLeft: horizontalScale(16),paddingBottom: horizontalScale(123) }}>
+          <SectionList
+            sections={Cart}
+            renderSectionHeader={renderSectionHeader}
             renderItem={renderItemService}
             showsVerticalScrollIndicator={false}
           />
@@ -258,5 +293,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight:horizontalScale(32)
   },
-
+  titleSection:{
+    fontSize: fontSize(16),
+    lineHeight: fontSize(20),
+    fontFamily: Fonts.Roboto,
+    fontWeight: '700',
+    color: Colors.BUTTON.BLUE,
+    paddingTop: horizontalScale(16)
+  }
 })

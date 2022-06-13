@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, Text, Image, FlatList, TouchableOpacity, ImageBackground } from 'react-native'
 import { salonConst } from '../../constants'
 import { useDispatch, useSelector } from 'react-redux'
-import {actionAddCart,actionCart} from '@src/screens'
+import {actionAddCart,actionAddProductCart,actionAddServiceCart} from '@src/screens'
 
 var findIndex = (products:any, id:string) => {
   var result = 0;
   products.forEach((product:any) => {
       if (product.id === id) {
-          result = product.quantify;
+        result = product.quantify;
       }
   });
   return result;
@@ -28,9 +28,20 @@ const SalonPage = ({ route }: any) => {
   const cart =useSelector((state: any) => {
     return state.cart.data
   })
+  const productsCart =useSelector((state: any) => {
+    return state.cart.products
+  })
+  const servicesCart =useSelector((state: any) => {
+    return state.cart.services
+  })
   
+  // console.log(st)
+
   const handleAddCard = (item: any) =>{
-    dispatch(actionAddCart(item))
+    // dispatch(actionAddCart(item))
+    item.type&&dispatch(actionAddServiceCart(item))||dispatch(actionAddProductCart(item))
+    // dispatch(actionAddProductCart(item))
+    // dispatch(actionAddServiceCart(item))
   }
 
 
@@ -78,14 +89,26 @@ const SalonPage = ({ route }: any) => {
     </View>
   )}
 
-  const renderCardItem = (id:string)=>{
-    let quantify= findIndex(cart,id)
-    if(quantify){
-      return (
-        <View style={styles.qtfCart} >
-          <Text style={styles.txtCart}>{quantify}</Text>
-        </View>
-      )
+  const renderCardItem = (id:string,type:boolean)=>{
+    if(type){
+      let quantify= findIndex(servicesCart,id)
+      if(quantify){
+        return (
+          <View style={styles.qtfCart} >
+            <Text style={styles.txtCart}>{quantify}</Text>
+          </View>
+       )
+      }
+    }
+    else{
+      let quantify= findIndex(productsCart,id)
+      if(quantify){
+        return (
+          <View style={styles.qtfCart} >
+            <Text style={styles.txtCart}>{quantify}</Text>
+          </View>
+        )
+      }
     }
     return null
   }
@@ -110,7 +133,7 @@ const SalonPage = ({ route }: any) => {
           </View>
         </View>
         <TouchableOpacity style={[styles.bgAddCard]} onPress={()=>handleAddCard(item)}>
-          {renderCardItem(item.id)}
+          {renderCardItem(item.id,item.type?true:false)}
           <IC.IconCart />
         </TouchableOpacity>
 
