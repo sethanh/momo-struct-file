@@ -1,9 +1,9 @@
 import { Colors, Container, Fonts, fontSize, formatMoney, horizontalScale, IC, Button } from '@src/core'
 import React, { useMemo } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, Image, FlatList,SectionList, SectionListData } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity, Image, FlatList, SectionList, SectionListData } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 import { useDispatch, useSelector } from 'react-redux'
-import { actionAddProductCart,actionAddServiceCart, actionRemoveProductCart, actionRemoveServiceCart } from '@src/screens'
+import { actionAddProductCart, actionAddServiceCart, actionRemoveProductCart, actionRemoveServiceCart } from '@src/screens'
 
 interface IHeader {
   section: SectionListData<{ title: string }>
@@ -12,67 +12,64 @@ interface IHeader {
 const CartPage = ({ route }: any) => {
   const { params } = route
   const dispatch = useDispatch()
-  const cart = useSelector((state: any) => {
-    return state.cart.data
-  })
 
-  const productsCart =useSelector((state: any) => {
+  const productsCart = useSelector((state: any) => {
     return state.cart.products
   })
-  const servicesCart =useSelector((state: any) => {
+  const servicesCart = useSelector((state: any) => {
     return state.cart.services
   })
 
-  const Cart = useMemo(()=>{
-    const result:any= [
+  const Cart = useMemo(() => {
+    const result: any = [
       {
-        title:'Dịch vụ',
-        data: servicesCart
+        title: 'Sản phẩm',
+        data: productsCart
       },
       {
-        title:'Sản phẩm',
-        data: productsCart
+        title: 'Dịch vụ',
+        data: servicesCart
       }
     ]
     return result;
-  },[servicesCart,productsCart])
+  }, [servicesCart, productsCart])
 
-  const handleAddCard = (item: any) =>{
-    item.type&&dispatch(actionAddServiceCart(item))||dispatch(actionAddProductCart(item))
+  const handleAddCard = (item: any) => {
+    item.type && dispatch(actionAddServiceCart(item)) || dispatch(actionAddProductCart(item))
   }
 
-  const handleRemoveCard = (item: any) =>{
-    item.type&&dispatch(actionRemoveServiceCart(item))||dispatch(actionRemoveProductCart(item))
+  const handleRemoveCard = (item: any) => {
+    item.type && dispatch(actionRemoveServiceCart(item)) || dispatch(actionRemoveProductCart(item))
   }
 
-  const total = useMemo(()=>{
-    const results:any= servicesCart.reduce((result:any,prod:any)=>{
-       return result+ prod.quantify
-    },0)
-    const resultp:any= productsCart.reduce((result:any,prod:any)=>{
-      return result+ prod.quantify
-   },0)
-    return resultp+results
-  },[servicesCart,productsCart])
+  const total = useMemo(() => {
+    const results: any = servicesCart.reduce((result: any, prod: any) => {
+      return result + prod.quantify
+    }, 0)
+    const resultp: any = productsCart.reduce((result: any, prod: any) => {
+      return result + prod.quantify
+    }, 0)
+    return resultp + results
+  }, [servicesCart, productsCart])
 
-  const payment = useMemo(()=>{
-    const resultp:any= productsCart.reduce((result:any,prod:any)=>{
-       return prod.promotion?(result+((prod.quantify*prod.price*(100-prod.promotion))/100)):(result+ prod.quantify*prod.price)
-    },0)
-    const results:any= servicesCart.reduce((result:any,prod:any)=>{
-      return prod.promotion?(result+((prod.quantify*prod.price*(100-prod.promotion))/100)):(result+ prod.quantify*prod.price)
-   },0)
-   return resultp+results
-  },[servicesCart,productsCart])
+  const payment = useMemo(() => {
+    const resultp: any = productsCart.reduce((result: any, prod: any) => {
+      return prod.promotion ? (result + ((prod.quantify * prod.price * (100 - prod.promotion)) / 100)) : (result + prod.quantify * prod.price)
+    }, 0)
+    const results: any = servicesCart.reduce((result: any, prod: any) => {
+      return prod.promotion ? (result + ((prod.quantify * prod.price * (100 - prod.promotion)) / 100)) : (result + prod.quantify * prod.price)
+    }, 0)
+    return resultp + results
+  }, [servicesCart, productsCart])
 
-  const renderSectionHeader=({section: {title}}: any) => (
+  const renderSectionHeader = ({ section: { title } }: any) => (
     <Text style={styles.titleSection}>{title}</Text>
   );
 
   const renderInfoView = (Icon: React.FC<SvgProps>, value: string) => (
-    <View style={[styles.row, styles.mgTxt]}>
+    <View style={[styles.row, styles.mgTxt, { alignItems: 'center' }]}>
       <Icon />
-      <Text style={[styles.txtAd]}>{value}</Text>
+      <Text style={[styles.txtAd, { marginTop: horizontalScale(4) }]}>{value}</Text>
     </View>
   )
   const renderItemService = ({ item }: any) => (
@@ -94,13 +91,13 @@ const CartPage = ({ route }: any) => {
       </View>
 
       <View style={[styles.bgAddCard, styles.row]}>
-        <TouchableOpacity style={[styles.btnAction,{borderRightWidth: 1}]} 
-          onPress={()=>handleRemoveCard(item)}>
+        <TouchableOpacity style={[styles.btnAction, { borderRightWidth: 1 }]}
+          onPress={() => handleRemoveCard(item)}>
           <IC.IconMinus />
         </TouchableOpacity>
         <Text style={[styles.txtQuan]}>{item.quantify}</Text>
-        <TouchableOpacity style={[styles.btnAction,,{borderLeftWidth: 1}]}
-           onPress={()=>handleAddCard(item)}>
+        <TouchableOpacity style={[styles.btnAction, , { borderLeftWidth: 1 }]}
+          onPress={() => handleAddCard(item)}>
           <IC.IconPlus />
         </TouchableOpacity>
       </View>
@@ -120,7 +117,7 @@ const CartPage = ({ route }: any) => {
         <View style={[styles.line]} />
         {renderAccountView()}
         <View style={[styles.line, { height: horizontalScale(10) }]} />
-        <View style={[styles.row, styles.space, { paddingVertical: horizontalScale(8), paddingHorizontal: horizontalScale(16) }]}>
+        <View style={[styles.row, styles.space,styles.bgrd]}>
           <View>
             <Text>{params.name}</Text>
             {renderInfoView(IC.IconLocation, params.address)}
@@ -130,7 +127,7 @@ const CartPage = ({ route }: any) => {
           </TouchableOpacity>
         </View>
         <View style={[styles.line]} />
-        <View style={{ flex: 1, paddingLeft: horizontalScale(16),paddingBottom: horizontalScale(123) }}>
+        <View style={{ flex: 1, paddingLeft: horizontalScale(16), paddingBottom: horizontalScale(123) }}>
           <SectionList
             sections={Cart}
             renderSectionHeader={renderSectionHeader}
@@ -277,28 +274,32 @@ const styles = StyleSheet.create({
     borderColor: Colors.BORDER.GRAY,
     borderWidth: 1
   },
-  btnAction:{
-    flex:1,
-    height:horizontalScale(32),
-    justifyContent:'center',
-    alignItems:'center',
+  btnAction: {
+    flex: 1,
+    height: horizontalScale(32),
+    justifyContent: 'center',
+    alignItems: 'center',
     borderColor: Colors.BORDER.GRAY,
   },
-  txtQuan:{
+  txtQuan: {
     width: horizontalScale(51),
-    height:horizontalScale(32),
+    height: horizontalScale(32),
     borderRightWidth: 1,
-    justifyContent:'center',
-    alignItems:'center',
+    justifyContent: 'center',
+    alignItems: 'center',
     textAlign: 'center',
-    lineHeight:horizontalScale(32)
+    lineHeight: horizontalScale(32)
   },
-  titleSection:{
+  titleSection: {
     fontSize: fontSize(16),
     lineHeight: fontSize(20),
     fontFamily: Fonts.Roboto,
     fontWeight: '700',
     color: Colors.BUTTON.BLUE,
     paddingTop: horizontalScale(16)
+  },
+  bgrd:{
+    paddingVertical: horizontalScale(8),
+    paddingHorizontal: horizontalScale(16)
   }
 })

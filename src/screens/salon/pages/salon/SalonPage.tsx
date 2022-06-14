@@ -20,8 +20,8 @@ const SalonPage = () => {
   const { infors, fillstar } = salonConst
 
   const onNoFill = () => {
-    setSoFar(10),
-      setStar(0)
+    setSoFar(1)
+    setStar(0)
   }
 
   const renderItemSalon = ({ item }: any) => (

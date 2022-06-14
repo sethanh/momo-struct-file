@@ -45,8 +45,13 @@ import IconPlus from '../../assets/Images/svg/ic_plus.svg'
 import IconMinus from '../../assets/Images/svg/ic_minus.svg'
 import IconBlueStar from '../../assets/Images/svg/ic_blue_star.svg'
 import IconGrayStar from '../../assets/Images/svg/ic_gray_star.svg'
-
-
+import IconTimer from '../../assets/Images/svg/ic_timer.svg'
+import IconCustomer from '../../assets/Images/svg/ic_customer.svg'
+import IconPayed from '../../assets/Images/svg/ic_payed.svg'
+import IconDown from '../../assets/Images/svg/ic_down.svg'
+import IconTick from '../../assets/Images/svg/ic_tick.svg'
+import IconPhone from '../../assets/Images/svg/ic_phone.svg'
+import IconInvoice from '../../assets/Images/svg/ic_invoice.svg'
 
 const IC={
   IconSearch,
@@ -70,7 +75,14 @@ const IC={
   IconPlus,
   IconMinus,
   IconBlueStar,
-  IconGrayStar
+  IconGrayStar,
+  IconTimer,
+  IconCustomer,
+  IconPayed,
+  IconDown,
+  IconTick,
+  IconPhone,
+  IconInvoice
 }
 
 const ICTab={

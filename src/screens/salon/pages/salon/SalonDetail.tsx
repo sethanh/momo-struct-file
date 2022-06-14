@@ -229,7 +229,7 @@ const SalonPage = ({ route }: any) => {
       </View>
       <TouchableOpacity style={[styles.bgAddCard, { alignSelf: 'center' }]} 
         onPress={()=>handleAddCard(item)}>
-        {renderCardItem(item.id)}
+        {renderCardItem(item.id,item.type)}
         <IC.IconCart />
       </TouchableOpacity>
     </View>

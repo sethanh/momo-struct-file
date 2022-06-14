@@ -1,4 +1,4 @@
-import { Colors, fontSize, heightSatusbar, horizontalScale, IconBack } from '@src/core/utils'
+import { Colors, Fonts, fontSize, heightSatusbar, horizontalScale, IconBack } from '@src/core/utils'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { StyleSheet, StatusBar, View, TouchableOpacity, Text, ViewStyle } from 'react-native'
@@ -82,10 +82,11 @@ const styles = StyleSheet.create({
     paddingBottom: horizontalScale(15),
   },
   label: {
-    color: Colors.TAB.UNACTIVE,
+    color: Colors.TXT.BLACK,
     fontSize: fontSize(16),
     lineHeight: fontSize(24),
     fontWeight:'700',
+    fontFamily: Fonts.Roboto
   },
   btnBack: {
     position: 'absolute',

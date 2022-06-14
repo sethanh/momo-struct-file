@@ -33,11 +33,15 @@ export const Colors = {
     BLACK:'#2A3345',
     UNACTIVE:'#808B9F',
     RED:'#F5222D',
-    GRAY:'#EEF0F4'
+    GRAY:'#EEF0F4',
+    ORANGE:'#F8AC2F',
+    GREEN:'#56C22D'
   },
   BUTTON:{
     BLUE: '#0066FF',
     GRAY: '#F0F2F5',
+    CHECK: '#5D5FEF',
+    SGRAY: '#808B9F',
   },
   BORDER:{
     GRAY:'#DEE2EA'

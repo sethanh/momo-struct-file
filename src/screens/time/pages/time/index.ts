@@ -1,3 +1,3 @@
 import TimePage from "./TimePage"
-
-export { TimePage }
+import AppointmentDetail from "./AppointmentDetail"
+export { TimePage,AppointmentDetail }
