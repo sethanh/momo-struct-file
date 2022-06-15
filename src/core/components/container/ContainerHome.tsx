@@ -1,6 +1,5 @@
-import { Colors, fontSize, heightSatusbar, horizontalScale, IconBack, Fonts, verticalScale,IC } from '@src/core/utils'
+import { Colors, fontSize, heightSatusbar, horizontalScale , Fonts,IC } from '@src/core/utils'
 import React from 'react'
-import { useNavigation } from '@react-navigation/native'
 import { StyleSheet, StatusBar, View, TouchableOpacity, Text, ViewStyle } from 'react-native'
 import { FormProvider, useForm } from 'react-hook-form'
 import { Form } from '@src/core'
@@ -12,6 +11,7 @@ interface ContainerProps {
   showLeft?: boolean
   showRight?: boolean
   onRightClick?: () => void
+  khuvuc?: string
   styleView?: ViewStyle
   IconRight?: any
 }
@@ -21,8 +21,7 @@ interface FormValue {
 }
 
 const ContainerHome = (props: ContainerProps) => {
-  const { children, headerShow, title, showRight, onRightClick, styleView, IconRight, showLeft } = props
-  const navigation = useNavigation()
+  const { children, onRightClick, styleView,khuvuc } = props
   const form = useForm<FormValue>({
     defaultValues: {},
     mode: 'onChange'
@@ -50,8 +49,8 @@ const ContainerHome = (props: ContainerProps) => {
                 />
               </FormProvider>
             </View>
-            <TouchableOpacity style={[styles.bgRight]}>
-              <Text style={[styles.txtHeader]}>Đà Nẵng</Text>
+            <TouchableOpacity style={[styles.bgRight]} onPress={onRightClick}>
+              <Text style={[styles.txtHeader]}>{khuvuc}</Text>
               <IC.IconRowDown/>
             </TouchableOpacity>
           </View>

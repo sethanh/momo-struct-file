@@ -60,6 +60,8 @@ import IconLocationAC from '../../assets/Images/svg/ic_location_ac.svg'
 import IconProductAC from '../../assets/Images/svg/ic_product_ac.svg'
 import IconQuestionAC from '../../assets/Images/svg/ic_question_ac.svg'
 import IconTimeAC from '../../assets/Images/svg/ic_time_ac.svg'
+import IconHide from '../../assets/Images/svg/ic_hide.svg'
+import IconSearchNBG from '../../assets/Images/svg/ic_search_nbg.svg'
 
 const IC={
   IconSearch,
@@ -97,7 +99,9 @@ const IC={
   IconTimeAC,
   IconQuestionAC,
   IconProductAC,
-  IconLocationAC
+  IconLocationAC,
+  IconHide,
+  IconSearchNBG
 }
 
 const ICTab={

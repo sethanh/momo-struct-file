@@ -66,7 +66,7 @@ export default ProfilePage
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BG.GRAY,
+    backgroundColor: Colors.BUTTON.GRAY,
     padding: horizontalScale(16)
   },
   row: {
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   line: {
     height: horizontalScale(1),
     width: '100%',
-    backgroundColor:  Colors.BG.GRAY,
+    backgroundColor:  Colors.BUTTON.GRAY,
   },
   fontct: {
     fontSize: fontSize(14),

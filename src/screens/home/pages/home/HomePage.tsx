@@ -1,19 +1,44 @@
 import { useNavigation } from '@react-navigation/native'
-import { Container, horizontalScale, IC, Colors, fontSize, Fonts, Screens, formatMoney,FLashView } from '@src/core'
-import React, {} from 'react'
+import { Container, horizontalScale, IC, Colors, fontSize, Fonts, Screens, formatMoney, FLashView, Modal, Form } from '@src/core'
+import React, { useMemo, useState } from 'react'
+import { FormProvider, useForm } from 'react-hook-form'
 import { StyleSheet, View, Text, TouchableOpacity, FlatList, ImageBackground, ScrollView } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 import { homeConst } from '../../constants'
 
+interface FormValue {
+  search: ''
+}
+
 const HomePage = () => {
 
   const navigation = useNavigation<any>()
-  const { promotions, offers } = homeConst
+  const { promotions, offers, khuvucs } = homeConst
+
+  const form = useForm<FormValue>({
+    defaultValues: {},
+    mode: 'onChange'
+  })
+
+  const [khuvuc, setKhuvuc] = useState(3)
+  const [showFill, setShowFill] = useState(false)
+  const [txtSearch, setTxtSearch] = useState('')
+  const [keyboard,setKeyBoard]= useState(false)
+
+  const khuvucFill = useMemo(() => {
+    const result: any = khuvucs.filter(od => od.toLowerCase().search(txtSearch.toLowerCase()) !== -1);
+    return result
+  }, [khuvucs, txtSearch])
 
   const handleNavigator = (screen: string, data?: any) => {
     data ? navigation.navigate(screen, data) : navigation.navigate(screen)
   }
 
+  const onSearchChange = (e: any) => {
+    const { nativeEvent } = e
+    const { text } = nativeEvent
+    setTxtSearch(text)
+  }
 
   const onHandleSelected = (title: string) => {
     switch (title) {
@@ -24,6 +49,17 @@ const HomePage = () => {
         break
     }
   }
+
+  const onSetKhuvuc = (value: number) => {
+    setKhuvuc(value)
+    setKeyBoard(false)
+    setShowFill(false)
+  }
+  const onSetShowFill= (value:boolean)=>{
+    setKeyBoard(false)
+    setShowFill(false)
+  }
+
   const renderViewItemSelected = (title: string, Icon: React.FC<SvgProps>, colors: string) => (
     <TouchableOpacity style={[styles.bgItemSelected, { backgroundColor: colors }]} onPress={() => onHandleSelected(title)}>
       <Text style={[styles.txtItemSelected]}>{title}</Text>
@@ -51,7 +87,7 @@ const HomePage = () => {
       </ImageBackground>
       <Text style={[styles.txtTitle, styles.marginTxt]}>{item.name}</Text>
       <View style={[styles.row, { marginVertical: horizontalScale(6) }]}>
-        <Text style={[styles.txtAd, styles.txtprice]}>{formatMoney(item.price * (100-item.promotion) / 100)}đ</Text>
+        <Text style={[styles.txtAd, styles.txtprice]}>{formatMoney(item.price * (100 - item.promotion) / 100)}đ</Text>
         <Text style={[styles.txtAd, styles.txtpreprice]}>{formatMoney(item.price)}đ</Text>
       </View>
       <View style={[styles.row]}>
@@ -104,30 +140,72 @@ const HomePage = () => {
     </View>
   )
 
-  const renderTitleView = (title: string,flash?:number) => (
+  const renderTitleView = (title: string, flash?: number) => (
     <View style={[styles.bgtxtoffer, styles.row, { marginBottom: horizontalScale(12) }]}>
       <View style={[styles.row]}>
         <Text style={[styles.txtof1]}>{title}</Text>
-        {flash&&<FLashView value={flash}></FLashView>}
+        {flash && <FLashView value={flash}></FLashView>}
       </View>
       <TouchableOpacity>
-        <IC.IconNext/>
+        <IC.IconNext />
       </TouchableOpacity>
     </View>
   )
 
+  const renderButtonSetStatus = ({ item }: any) => (
+    <TouchableOpacity onPress={() => onSetKhuvuc(khuvucs.indexOf(item))}
+      style={[styles.bgSetStatus, styles.row, styles.space]}>
+      <Text style={[khuvucs[khuvuc] === item && styles.txtat]}>{item}</Text>
+      {khuvucs[khuvuc] === item && <IC.IconTick />}
+    </TouchableOpacity>
+  )
+  const renderFillView = () => (
+      <View style={[styles.bgFill, styles.borderTop,keyboard&&styles.openKeyboard]}>
+        <TouchableOpacity style={[{ alignSelf: 'center', marginBottom: horizontalScale(11) }]}
+          onPress={() => onSetShowFill(false)}>
+          <IC.IconHide />
+        </TouchableOpacity>
+        <View style={[styles.row, styles.space, { alignItems: 'center', paddingHorizontal: horizontalScale(16) }]}>
+          <TouchableOpacity onPress={() => onSetShowFill(false)}>
+            <IC.IconClose />
+          </TouchableOpacity>
+          <Text style={[styles.font, styles.tt700, styles.txtbl]}>Chọn khu vực</Text>
+          <View></View>
+        </View>
+        <View style={{ paddingHorizontal: horizontalScale(16), paddingVertical: horizontalScale(8) }}>
+          <FormProvider {...form}>
+            <Form.TextInput
+              name='search'
+              LeftIcon={IC.IconSearchNBG}
+              placeholder="Tìm kiếm..."
+              contentStyle={styles.search}
+              onChange={(e) => onSearchChange(e)}
+              onFocus={()=>setKeyBoard(true)}
+            />
+          </FormProvider>
+        </View>
+        <FlatList
+          data={khuvucFill}
+          renderItem={renderButtonSetStatus}
+        />
+      </View>
+  )
+
   return (
-    <Container.Home headerShow>
+    <Container.Home headerShow khuvuc={khuvucs[khuvuc]} onRightClick={() => { setShowFill(true) }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           {renderViewSelected()}
-          {renderTitleView('Flash Sale',20211)}
+          {renderTitleView('Flash Sale', 20211)}
           {renderPromotionView()}
-          <View style={[styles.line]}/>
+          <View style={[styles.line]} />
           {renderTitleView('Địa điểm nhiều deal hot')}
           {renderOfferView()}
         </View>
       </ScrollView>
+      <Modal.Light visible={showFill} onCloseModal={() => setShowFill(false)}>
+        {renderFillView()}
+      </Modal.Light>
     </Container.Home>
   )
 }
@@ -244,14 +322,14 @@ const styles = StyleSheet.create({
     textDecorationLine: 'line-through',
     textDecorationStyle: 'solid'
   },
-  txtpromo:{
+  txtpromo: {
     fontSize: fontSize(12),
     lineHeight: fontSize(16),
     fontWeight: '500',
     fontFamily: Fonts.Roboto,
     color: 'white',
   },
-  txtFlash:{
+  txtFlash: {
     backgroundColor: Colors.TXT.BLACK,
     color: Colors.hFFFFFF,
     paddingHorizontal: horizontalScale(5),
@@ -261,26 +339,107 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.Roboto,
     borderRadius: 5,
     overflow: 'hidden',
-    alignSelf:'center'
+    alignSelf: 'center'
   },
-  hpFlash:{
-    color:Colors.TXT.BLACK,
+  hpFlash: {
+    color: Colors.TXT.BLACK,
     fontSize: fontSize(16),
     lineHeight: fontSize(22),
     fontFamily: Fonts.Roboto,
     marginHorizontal: horizontalScale(4),
     fontWeight: '500',
-    
+
   },
-  bgFlash:{
-    flexDirection:'row',
-    justifyContent:'center',
+  bgFlash: {
+    flexDirection: 'row',
+    justifyContent: 'center',
     marginLeft: horizontalScale(20)
   },
-  line:{
+  line: {
     height: horizontalScale(10),
     width: '100%',
     backgroundColor: Colors.BUTTON.GRAY,
     marginBottom: horizontalScale(16)
+  },
+  tt400: {
+    fontWeight: '400'
+  },
+  tt500: {
+    fontWeight: '500'
+  },
+  tt700: {
+    fontWeight: '700'
+  },
+  txtbl: {
+    color: Colors.TXT.BLACK
+  },
+  txtat: {
+    color: Colors.BUTTON.BLUE
+  },
+  txtunat: {
+    color: Colors.TAB.UNACTIVE
+  },
+  boderHead: {
+    borderBottomWidth: horizontalScale(3),
+    borderBottomColor: Colors.BUTTON.BLUE
+  },
+  lineCl: {
+    height: '100%',
+    width: 1,
+    backgroundColor: Colors.BUTTON.GRAY,
+  },
+  fontct: {
+    fontSize: fontSize(14),
+    lineHeight: fontSize(20),
+    fontFamily: Fonts.Roboto
+  },
+  font: {
+    fontSize: fontSize(16),
+    lineHeight: fontSize(24),
+    fontFamily: Fonts.Roboto
+  },
+  bgrd: {
+    paddingVertical: horizontalScale(8),
+  },
+  logo: {
+    width: horizontalScale(74),
+    height: horizontalScale(74),
+    borderRadius: horizontalScale(8),
+    marginRight: horizontalScale(12)
+  },
+  bgSalon: {
+    paddingHorizontal: horizontalScale(16),
+    borderBottomWidth: horizontalScale(10),
+    borderBottomColor: Colors.BUTTON.GRAY,
+  },
+  pdvr: {
+    paddingVertical: horizontalScale(12),
+  },
+  bgFill: {
+    backgroundColor: 'white',
+    width: '100%',
+    paddingBottom: horizontalScale(30),
+    paddingTop: horizontalScale(9),
+  },
+  borderTop: {
+    borderTopLeftRadius: horizontalScale(16),
+    borderTopRightRadius: horizontalScale(16)
+  },
+  bgSetStatus: {
+    marginLeft: horizontalScale(16),
+    borderBottomWidth: horizontalScale(1),
+    borderBottomColor: Colors.BUTTON.GRAY,
+    paddingVertical: horizontalScale(12),
+    paddingRight: horizontalScale(16)
+  },
+  space: {
+    justifyContent: 'space-between'
+  },
+  search: {
+    backgroundColor: Colors.BUTTON.GRAY,
+  },
+  openKeyboard:{
+    flex:1,
+    marginTop:horizontalScale(50)
   }
 })

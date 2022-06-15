@@ -17,8 +17,10 @@ const offers=[
   {unit:1,name:'Herbal Spa',address:'130 Sơn Trà',price:125000,image: IMAGE.BgOffer02},
   {unit:2,name:'Venus Nail',address:'130 Đống Đa hải chây',image: IMAGE.BgOffer01},
 ]
+const khuvucs=['Toàn quốc','Hà Nội','TP.Hồ Chí Minh','Đà Nẵng']
 export const homeConst = {
   settings,
   promotions,
-  offers
+  offers,
+  khuvucs
 }
