@@ -1,13 +1,8 @@
-import { Colors, Container, Fonts, fontSize, formatMoney, horizontalScale, IC, Button } from '@src/core'
+import { Colors, Container, Fonts, fontSize, formatMoney, horizontalScale, IC, PaymentView, SalonView } from '@src/core'
 import React, { useMemo } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, Image, FlatList, SectionList, SectionListData } from 'react-native'
-import { SvgProps } from 'react-native-svg'
+import { StyleSheet, View, Text, TouchableOpacity, Image, SectionList} from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { actionAddProductCart, actionAddServiceCart, actionRemoveProductCart, actionRemoveServiceCart } from '@src/screens'
-
-interface IHeader {
-  section: SectionListData<{ title: string }>
-}
 
 const CartPage = ({ route }: any) => {
   const { params } = route
@@ -65,13 +60,6 @@ const CartPage = ({ route }: any) => {
   const renderSectionHeader = ({ section: { title } }: any) => (
     <Text style={styles.titleSection}>{title}</Text>
   );
-
-  const renderInfoView = (Icon: React.FC<SvgProps>, value: string) => (
-    <View style={[styles.row, styles.mgTxt, { alignItems: 'center' }]}>
-      <Icon />
-      <Text style={[styles.txtAd, { marginTop: horizontalScale(4) }]}>{value}</Text>
-    </View>
-  )
   const renderItemService = ({ item }: any) => (
     <View style={[styles.bgSalon, styles.row]}>
       <Image source={item.image} style={[styles.logo]} />
@@ -117,7 +105,7 @@ const CartPage = ({ route }: any) => {
         <View style={[styles.line]} />
         {renderAccountView()}
         <View style={[styles.line, { height: horizontalScale(10) }]} />
-        <View style={[styles.row, styles.space,styles.bgrd]}>
+        {/* <View style={[styles.row, styles.space,styles.bgrd]}>
           <View>
             <Text>{params.name}</Text>
             {renderInfoView(IC.IconLocation, params.address)}
@@ -125,7 +113,8 @@ const CartPage = ({ route }: any) => {
           <TouchableOpacity style={{ alignSelf: 'center' }}>
             <IC.IconNext />
           </TouchableOpacity>
-        </View>
+        </View> */}
+        <SalonView address={params.address} name={params.name}/>
         <View style={[styles.line]} />
         <View style={{ flex: 1, paddingLeft: horizontalScale(16), paddingBottom: horizontalScale(123) }}>
           <SectionList
@@ -135,16 +124,7 @@ const CartPage = ({ route }: any) => {
             showsVerticalScrollIndicator={false}
           />
         </View>
-        <View style={[styles.bgPay]}>
-          <View style={[styles.row, styles.space]}>
-            <View style={[styles.row]}>
-              <Text style={[styles.txtTitle, { fontWeight: '400' }]}>Tổng tiền</Text>
-              <Text style={[styles.txtTitle, { fontWeight: '400', color: Colors.TXT.UNACTIVE }]}>({total} sản phẩm)</Text>
-            </View>
-            <Text style={[styles.txtTitle, { color: Colors.BUTTON.BLUE }]}>{formatMoney(payment)}đ</Text>
-          </View>
-          <Button.Main label='Thanh toán' />
-        </View>
+        <PaymentView total={total} value={payment}/>
       </View>
     </Container.View>
   )

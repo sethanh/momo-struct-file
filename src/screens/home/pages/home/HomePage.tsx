@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
-import { Container, horizontalScale, IC, Colors, fontSize, Fonts, Screens, formatMoney, formatFlash } from '@src/core'
-import React, { useEffect, useState } from 'react'
+import { Container, horizontalScale, IC, Colors, fontSize, Fonts, Screens, formatMoney,FLashView } from '@src/core'
+import React, {} from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, FlatList, ImageBackground, ScrollView } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 import { homeConst } from '../../constants'
@@ -9,16 +9,6 @@ const HomePage = () => {
 
   const navigation = useNavigation<any>()
   const { promotions, offers } = homeConst
-  const [count,setCount] = useState(0)
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-        setCount(prevCount=>prevCount+1)
-    }, 1000)
-    return () => {
-      clearInterval(timer)
-    };
-  }, [])
 
   const handleNavigator = (screen: string, data?: any) => {
     data ? navigation.navigate(screen, data) : navigation.navigate(screen)
@@ -34,19 +24,6 @@ const HomePage = () => {
         break
     }
   }
-
-  const renderFlashView=(value:number)=>{
-    var rt=formatFlash(value-count)
-    return(
-    <View style={[styles.bgFlash]}>
-      <Text style={[styles.txtFlash]}>{rt[0]}</Text>
-      <Text style={[styles.hpFlash]}>:</Text>
-      <Text style={[styles.txtFlash]}>{rt[1]}</Text>
-      <Text style={[styles.hpFlash]}>:</Text>
-      <Text style={[styles.txtFlash]}>{rt[2]}</Text>
-    </View>
-  )}
-
   const renderViewItemSelected = (title: string, Icon: React.FC<SvgProps>, colors: string) => (
     <TouchableOpacity style={[styles.bgItemSelected, { backgroundColor: colors }]} onPress={() => onHandleSelected(title)}>
       <Text style={[styles.txtItemSelected]}>{title}</Text>
@@ -131,7 +108,7 @@ const HomePage = () => {
     <View style={[styles.bgtxtoffer, styles.row, { marginBottom: horizontalScale(12) }]}>
       <View style={[styles.row]}>
         <Text style={[styles.txtof1]}>{title}</Text>
-        {flash&&renderFlashView(flash-count>0?flash-count:0)}
+        {flash&&<FLashView value={flash}></FLashView>}
       </View>
       <TouchableOpacity>
         <IC.IconNext/>

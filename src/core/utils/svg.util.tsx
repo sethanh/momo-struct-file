@@ -52,6 +52,14 @@ import IconDown from '../../assets/Images/svg/ic_down.svg'
 import IconTick from '../../assets/Images/svg/ic_tick.svg'
 import IconPhone from '../../assets/Images/svg/ic_phone.svg'
 import IconInvoice from '../../assets/Images/svg/ic_invoice.svg'
+import IconBlueHeart from '../../assets/Images/svg/ic_blue_heart.svg'
+import IconEdit from '../../assets/Images/svg/ic_edit.svg'
+
+import IconLayerAC from '../../assets/Images/svg/ic_layer_ac.svg'
+import IconLocationAC from '../../assets/Images/svg/ic_location_ac.svg'
+import IconProductAC from '../../assets/Images/svg/ic_product_ac.svg'
+import IconQuestionAC from '../../assets/Images/svg/ic_question_ac.svg'
+import IconTimeAC from '../../assets/Images/svg/ic_time_ac.svg'
 
 const IC={
   IconSearch,
@@ -82,7 +90,14 @@ const IC={
   IconDown,
   IconTick,
   IconPhone,
-  IconInvoice
+  IconInvoice,
+  IconBlueHeart,
+  IconEdit,
+  IconLayerAC,
+  IconTimeAC,
+  IconQuestionAC,
+  IconProductAC,
+  IconLocationAC
 }
 
 const ICTab={

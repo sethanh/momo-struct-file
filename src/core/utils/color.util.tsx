@@ -45,5 +45,8 @@ export const Colors = {
   },
   BORDER:{
     GRAY:'#DEE2EA'
+  },
+  BG:{
+    GRAY: '#E5E5E5'
   }
 }

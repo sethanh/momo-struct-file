@@ -1,9 +1,10 @@
-import { Colors, Container, Fonts, fontSize, horizontalScale, IC, formatMoney,formatFlash } from '@src/core'
-import React, { useEffect, useState } from 'react'
+import { Colors, Container, Fonts, fontSize, horizontalScale, IC, formatMoney} from '@src/core'
+import React, { useState } from 'react'
 import { StyleSheet, View, Text, Image, FlatList, TouchableOpacity, ImageBackground } from 'react-native'
 import { salonConst } from '../../constants'
 import { useDispatch, useSelector } from 'react-redux'
-import {actionAddCart,actionAddProductCart,actionAddServiceCart} from '@src/screens'
+import {actionAddProductCart,actionAddServiceCart} from '@src/screens'
+import FlashView from '@src/core/components/view/FlashView'
 
 var findIndex = (products:any, id:string) => {
   var result = 0;
@@ -22,37 +23,17 @@ const SalonPage = ({ route }: any) => {
 
   const [option, setOption] = useState('Khuyến mãi')
   const [fillService, setFillService] = useState(0)
-
-  const [count,setCount] = useState(0)
-
-  const cart =useSelector((state: any) => {
-    return state.cart.data
-  })
   const productsCart =useSelector((state: any) => {
     return state.cart.products
   })
   const servicesCart =useSelector((state: any) => {
     return state.cart.services
   })
-  
-  // console.log(st)
 
   const handleAddCard = (item: any) =>{
-    // dispatch(actionAddCart(item))
     item.type&&dispatch(actionAddServiceCart(item))||dispatch(actionAddProductCart(item))
-    // dispatch(actionAddProductCart(item))
-    // dispatch(actionAddServiceCart(item))
   }
 
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-        setCount(prevCount=>prevCount+1)
-    }, 1000)
-    return () => {
-      clearInterval(timer)
-    };
-  }, [])
 
   const onSwitch = (value: string) => {
     switch (value) {
@@ -76,18 +57,6 @@ const SalonPage = ({ route }: any) => {
       <Text style={[styles.txtSelected, styles.mgsltxt, { color: Colors.TXT.GRAY }]}>|</Text>
     </TouchableOpacity>
   )
-
-  const renderFlashView=(value:number)=>{
-    var rt=formatFlash(value-count>0?value-count:0)
-    return(
-    <View style={[styles.bgFlash]}>
-      <Text style={[styles.txtFlash]}>{rt[0]}</Text>
-      <Text style={[styles.hpFlash]}>:</Text>
-      <Text style={[styles.txtFlash]}>{rt[1]}</Text>
-      <Text style={[styles.hpFlash]}>:</Text>
-      <Text style={[styles.txtFlash]}>{rt[2]}</Text>
-    </View>
-  )}
 
   const renderCardItem = (id:string,type:boolean)=>{
     if(type){
@@ -122,7 +91,7 @@ const SalonPage = ({ route }: any) => {
         <View style={[styles.bgPro]}>
           <Text style={[styles.txtpromo]}>Giảm {item.promotion} %</Text>
         </View>
-        {renderFlashView(item.flash)}
+        {<FlashView value={item.flash} container={styles.bgFlash}/>}
       </ImageBackground>
       <View style={[styles.row, styles.space, { alignItems: 'center' }]}>
         <View>
@@ -422,7 +391,7 @@ const styles = StyleSheet.create({
   },
   bgFlash:{
     position: 'absolute',
-    bottom: horizontalScale(16),
+    bottom: horizontalScale(8),
     right: horizontalScale(32),
     flexDirection:'row'
   },

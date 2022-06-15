@@ -18,6 +18,7 @@ import IcProduct02 from '../../assets/Images/png/ic_product02.png'
 import IcProduct03 from '../../assets/Images/png/ic_product03.png'
 import IcProduct04 from '../../assets/Images/png/ic_product04.png'
 
+import BgAvatar from '../../assets/Images/png/bg_avatar.png'
 
 export const IMAGE = {
     BgOffer01,
@@ -26,6 +27,8 @@ export const IMAGE = {
     BgPromotion02,
     BgPromotion03,
     BgPromotion04,
+    BgAvatar,
+
     IcAvenue,
     IcLalui,
     IcLammoc,

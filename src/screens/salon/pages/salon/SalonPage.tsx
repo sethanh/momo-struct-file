@@ -1,16 +1,9 @@
-import { useNavigation } from '@react-navigation/native'
-import { Colors, Container, Fonts, fontSize, horizontalScale, IC, Modal, Button, Screens } from '@src/core'
+import { Colors, Container, Fonts, fontSize, horizontalScale, IC, Modal, Button, MoreSalonView } from '@src/core'
 import React, { useState } from 'react'
-import { StyleSheet, View, Text, Image, FlatList, TouchableOpacity } from 'react-native'
-import { SvgProps } from 'react-native-svg'
+import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native'
 import { salonConst } from '../../constants'
 import { Slider } from '@miblanchard/react-native-slider'
 const SalonPage = () => {
-  const navigation = useNavigation<any>()
-
-  const handleNavigator = (screen: string, data?: any) => {
-    data ? navigation.navigate(screen, data) : navigation.navigate(screen)
-  }
 
 
   const [showFill, setShowFill] = useState(false)
@@ -24,31 +17,7 @@ const SalonPage = () => {
     setStar(0)
   }
 
-  const renderItemSalon = ({ item }: any) => (
-    <TouchableOpacity style={[styles.bgSalon, styles.row]} onPress={() => handleNavigator(Screens.SALON_DETAIL, item)}>
-      <Image source={item.image} style={[styles.logo]} />
-      <View style={[styles.infoSalon]}>
-        <Text style={[styles.txtTitle]}>
-          {item.name}
-        </Text>
-        {renderInfoView(IC.IconLocation, item.address)}
-        <View style={[styles.row]}>
-          {renderInfoView(IC.IconStar, `${item.star} (${item.quantify} đánh giá)`)}
-          <Text style={{ padding: 5 }}></Text>
-          {renderInfoView(IC.IconArrowss, `${item.far} km`)}
-        </View>
-        {renderInfoView(IC.IconClock, item.open)}
-
-      </View>
-    </TouchableOpacity>
-  )
-
-  const renderInfoView = (Icon: React.FC<SvgProps>, value: string) => (
-    <View style={[styles.row, styles.mgTxt]}>
-      <Icon />
-      <Text style={[styles.txtAd]}>{value}</Text>
-    </View>
-  )
+  const renderItemSalon = ({ item }: any) => (<MoreSalonView item={item}/>)
 
   const renderStar=(item:string,index:number)=>(
     <TouchableOpacity style={[styles.row, styles.btnFillStar]} key={index}

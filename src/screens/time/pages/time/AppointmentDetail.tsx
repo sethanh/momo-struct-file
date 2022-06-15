@@ -1,7 +1,6 @@
-import { Colors, Container, Fonts, fontSize, formatMoney, horizontalScale, IC } from '@src/core'
+import { Colors, Container, Fonts, fontSize, formatMoney, horizontalScale, IC, SalonView } from '@src/core'
 import React, { useMemo, } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, FlatList, Image, ScrollView } from 'react-native'
-import { SvgProps } from 'react-native-svg'
+import { StyleSheet, View, Text,FlatList} from 'react-native'
 // import { timeConst } from './../../constants'
 
 const AppoitmentDetail = ({ route }: any) => {
@@ -14,28 +13,19 @@ const AppoitmentDetail = ({ route }: any) => {
     }, 0)
     return result
   }, [service])
-
-  const renderInfoView = (Icon: React.FC<SvgProps>, value: string) => (
-    <View style={[styles.row, { alignItems: 'center' }]}>
-      <Icon />
-      <Text style={[styles.fontct, styles.txtunat, { marginTop: horizontalScale(4) }]}>{` ${value}`}</Text>
-    </View>
-  )
-
-  const renderSalonView = (item: any) => (
-    <View style={[styles.row, styles.space, styles.bgrd]}>
-      <View style={[styles.row]}>
-        <Image source={item.image} style={[styles.logo]} />
-        <View>
-          <Text style={[styles.font, styles.tt500]}>{item.name}</Text>
-          {renderInfoView(IC.IconLocation, item.address)}
-        </View>
-      </View>
-      <TouchableOpacity style={{ alignSelf: 'center' }}>
-        <IC.IconNext />
-      </TouchableOpacity>
-    </View>
-  )
+  const VirtualizedList = ({ children }: any) => {
+    return (
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        data={[]}
+        keyExtractor={() => "key"}
+        renderItem={null}
+        ListHeaderComponent={
+          <>{children}</>
+        }
+      />
+    )
+  }
 
   const renderTitleView = (item: any) => (
     <View style={[styles.paddingh, { paddingVertical: horizontalScale(16) }]}>
@@ -140,17 +130,13 @@ const AppoitmentDetail = ({ route }: any) => {
 
   return (
     <Container.View headerShow title={`Chi tiết lịch hẹn ${info.id || ""}`} showLeft >
-      <ScrollView 
-      showsVerticalScrollIndicator={false} 
-      nestedScrollEnabled={true} 
-      style={{ width: "100%" }}>
-      <View style={styles.container}>
-        <View style={[styles.line]} />
-        {/* <View style={[styles.line, { height: horizontalScale(10) }]} /> */}
-        {renderTitleView(params)}
-        <View style={[styles.line, { height: horizontalScale(10) }]} />
-       
-          {renderSalonView(salons)}
+      <VirtualizedList>
+        <View style={styles.container}>
+          <View style={[styles.line]} />
+          {/* <View style={[styles.line, { height: horizontalScale(10) }]} /> */}
+          {renderTitleView(params)}
+          <View style={[styles.line, { height: horizontalScale(10) }]} />
+          <SalonView address={salons.address} image={salons.image} name={salons.name}/>
           <View style={[styles.line, { height: horizontalScale(10) }]} />
           <View style={[styles.paddingh]}>
             <FlatList
@@ -166,8 +152,8 @@ const AppoitmentDetail = ({ route }: any) => {
           {renderpayment()}
           {renderShowData('PHƯƠNG THỨC GIAO HÀNG', 'giao hàng tiết kiêmj')}
           {renderShowData('THỜI GIAN ĐẶT LỊCH', '01/06/2022 12:30')}
-      </View>
-      </ScrollView>
+        </View>
+      </VirtualizedList>
     </Container.View>
   )
 }
